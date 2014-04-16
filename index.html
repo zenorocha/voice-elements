@@ -15,10 +15,27 @@
     <!-- Using Custom Elements -->
     <voice-player></voice-player>
 
+    <form id="demo">
+        <input id="demo-input" type="text" value="You have reached your destination">
+        <input id="demo-submit" type="submit" value="Play!">
+    </form>
+
     <script>
     window.addEventListener('polymer-ready', function(e) {
-        var audio = document.querySelector('voice-player');
-        audio.play();
+        var demo = document.querySelector('#demo');
+        var demoInput = document.querySelector('#demo-input');
+        var voicePlayer = document.querySelector('voice-player');
+
+        voicePlayer.setAttribute('text', demoInput.value);
+
+        demo.addEventListener('submit', function(e) {
+            e.preventDefault();
+            voicePlayer.play();
+        });
+
+        demoInput.addEventListener('input', function(e) {
+            voicePlayer.setAttribute('text', demoInput.value);
+        });
     });
     </script>
 
