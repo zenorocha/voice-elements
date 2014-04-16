@@ -70,11 +70,16 @@ In order to run it locally you'll need to fetch some dependencies and a basic se
     $ grunt
     ```
 
-4. Once you finish developing it, build the distribution files and publish it on Bower.
+4. To publish a new version, build the distribution files, bump package version, create tag, commit and push.
 
     ```sh
     $ grunt build
-    $ bower register voice-element https://github.com/you/voice-element
+    ```
+
+    ```sh
+    $ grunt bump       # v0.0.1
+    $ grunt bump:minor # v0.1.0
+    $ grunt bump:major # v1.0.0
     ```
 
 ## Contributing
@@ -91,4 +96,4 @@ For detailed changelog, check [Releases](https://github.com/zenorocha/voice-elem
 
 ## License
 
-[MIT License](http://opensource.org/licenses/MIT)
+[MIT License](http://zenorocha.mit-license.org/) © Zeno Rocha

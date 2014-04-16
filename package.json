@@ -13,6 +13,7 @@
     },
     "devDependencies": {
         "grunt": "~0.4.1",
+        "grunt-bump": "~0.0.13",
         "grunt-cli": "~0.1.9",
         "grunt-contrib-connect": "~0.5.0",
         "grunt-text-replace": "~0.3.11"
