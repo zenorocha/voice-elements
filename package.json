@@ -1,0 +1,20 @@
+{
+    "name": "voice-element",
+    "version": "0.0.0",
+    "description": "Web Speech API wrapper that allows you to do voice recognition (speech to text) and speech synthesis (text to speech) using Polymer.",
+    "author": "Zeno Rocha <hi@zenorocha.com>",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/zenorocha/voice-element"
+    },
+    "bugs": {
+        "url": "https://github.com/zenorocha/voice-element/issues"
+    },
+    "devDependencies": {
+        "grunt": "~0.4.1",
+        "grunt-cli": "~0.1.9",
+        "grunt-contrib-connect": "~0.5.0",
+        "grunt-text-replace": "~0.3.11"
+    }
+}

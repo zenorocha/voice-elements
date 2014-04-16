@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>&lt;voice&gt;</title>
+
+    <!-- Importing Web Component's Polyfill -->
+    <script src="bower_components/platform/platform.js"></script>
+
+    <!-- Importing Custom Elements -->
+    <link rel="import" href="src/voice-player.html">
+</head>
+<body>
+
+    <!-- Using Custom Elements -->
+    <voice-player></voice-player>
+
+    <script>
+    window.addEventListener('polymer-ready', function(e) {
+        var audio = document.querySelector('voice-player');
+        audio.play();
+    });
+    </script>
+
+</body>
+</html>
