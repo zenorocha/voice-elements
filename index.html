@@ -13,7 +13,8 @@
 <body>
 
     <!-- Using Custom Elements -->
-    <voice-player></voice-player>
+    <voice-player id="example-1" autoplay text="Welcome to the jungle! hahaha just kidding! Welcome to the Voice Web Component demonstration page"></voice-player>
+    <voice-player id="example-2"></voice-player>
 
     <form id="demo">
         <input id="demo-input" type="text" value="You have reached your destination">
@@ -24,7 +25,7 @@
     window.addEventListener('polymer-ready', function(e) {
         var demo = document.querySelector('#demo');
         var demoInput = document.querySelector('#demo-input');
-        var voicePlayer = document.querySelector('voice-player');
+        var voicePlayer = document.querySelector('#example-2');
 
         voicePlayer.setAttribute('text', demoInput.value);
 
