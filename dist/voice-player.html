@@ -1,0 +1,48 @@
+<!-- Import Polymer -->
+<link rel="import" href="../../polymer/polymer.html">
+
+<!-- Define your custom element -->
+<polymer-element name="voice-player" attributes="autoplay text pitch rate volume">
+    <script>
+        Polymer('voice-player', {
+            /* -- Attributes ------------------------------------------------ */
+            autoplay: false,
+            text: 'You have reached your destination',
+            pitch: 1,
+            rate: 1,
+            volume: 1,
+
+            /* -- Lifecycle ------------------------------------------------- */
+            created: function() {
+                if ('speechSynthesis' in window) {
+                    this.speech = new SpeechSynthesisUtterance();
+                }
+                else {
+                    console.error('Your browser do not support the Web Speech API');
+                }
+            },
+
+            ready: function() {
+                this.textChanged();
+                this.pitchChanged();
+                this.rateChanged();
+                this.volumeChanged();
+
+                if (this.autoplay) {
+                    this.play();
+                }
+            },
+
+            textChanged  : function() { this.speech.text = this.text;     },
+            pitchChanged : function() { this.speech.pitch = this.pitch;   },
+            rateChanged  : function() { this.speech.rate = this.rate;     },
+            volumeChanged: function() { this.speech.volume = this.volume; },
+
+            /* -- Methods --------------------------------------------------- */
+            play: function() {
+                speechSynthesis.speak(this.speech);
+            }
+        });
+    </script>
+
+</polymer-element>
