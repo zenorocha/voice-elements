@@ -1,17 +1,17 @@
-# &lt;voice&gt; ![Bower Version](https://badge.fury.io/bo/voice-element.svg)
+# &lt;voice-elements&gt; ![Bower Version](https://badge.fury.io/bo/voice-elements.svg)
 
-> [Web Speech API](https://dvcs.w3.org/hg/speech-api/raw-file/tip/speechapi.html) wrapper that allows you to do voice recognition (speech to text) and speech synthesis (text to speech) using [Polymer](http://www.polymer-project.org/).
+> Web Component wrapper to the [Web Speech API](https://dvcs.w3.org/hg/speech-api/raw-file/tip/speechapi.html), that allows you to do voice recognition (speech to text) and speech synthesis (text to speech) using [Polymer](http://www.polymer-project.org/).
 
 ## Demo
 
-[Check it live!](http://zenorocha.github.io/voice-element)
+[Check it live!](http://zenorocha.github.io/voice-elements)
 
 ## Usage
 
 1. Install the component using [Bower](http://bower.io/):
 
     ```sh
-    $ bower install voice-element --save
+    $ bower install voice-elements --save
     ```
 
 2. Import Web Components' polyfill:
@@ -23,16 +23,20 @@
 3. Import Custom Element:
 
     ```html
-    <link rel="import" href="bower_components/voice-element/dist/voice-element.html">
+    <link rel="import" href="bower_components/voice-elements/dist/voice-player.html">
     ```
 
 4. Start using it!
 
     ```html
-    <voice-element></voice-element>
+    <voice-player></voice-player>
     ```
 
-## Options
+## &lt;voice-player&gt;
+
+Provides you a simple DOM API to do speech synthesis (text to speech).
+
+### Options
 
 Attribute  | Options     | Default             | Description
 ---        | ---         | ---                 | ---
@@ -42,7 +46,7 @@ Attribute  | Options     | Default             | Description
 `rate`     | *int*       | `1`                 | Specifies the speaking rate for the utterance. `1` corresponds to a normal speaking rate. `2` is twice as fast, `0.5` is half as fast, and so on.
 `volume`   | *int*       | `1`                 | Specifies the speaking volume for the utterance. It ranges between `0` and `1`.
 
-## Methods
+### Methods
 
 Method   | Parameters     | Returns             | Description
 ---      | ---            | ---                 | ---
@@ -92,7 +96,7 @@ In order to run it locally you'll need to fetch some dependencies and a basic se
 
 ## History
 
-For detailed changelog, check [Releases](https://github.com/zenorocha/voice-element/releases).
+For detailed changelog, check [Releases](https://github.com/zenorocha/voice-elements/releases).
 
 ## License
 
