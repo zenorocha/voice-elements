@@ -1,4 +1,4 @@
-# &lt;voice-elements&gt; ![Bower Version](https://badge.fury.io/bo/voice-elements.svg)
+# &lt;voice-elements&gt; [![Bower Version](https://badge.fury.io/bo/voice-elements.svg)]() [![Custom Elements](http://img.shields.io/badge/custom-elements-9073c0.svg)]()
 
 > Web Component wrapper to the [Web Speech API](https://dvcs.w3.org/hg/speech-api/raw-file/tip/speechapi.html), that allows you to do voice recognition (speech to text) and speech synthesis (text to speech) using [Polymer](http://www.polymer-project.org/).
 
@@ -24,12 +24,14 @@
 
     ```html
     <link rel="import" href="bower_components/voice-elements/dist/voice-player.html">
+    <link rel="import" href="bower_components/voice-elements/dist/voice-recognition.html">
     ```
 
 4. Start using it!
 
     ```html
     <voice-player></voice-player>
+    <voice-recognition></voice-recognition>
     ```
 
 ## &lt;voice-player&gt;
@@ -38,13 +40,29 @@ Provides you a simple DOM API to do speech synthesis (text to speech).
 
 ### Options
 
-Attribute  | Options     | Default             | Description
+Attribute  | Type        | Default             | Description
 ---        | ---         | ---                 | ---
 `autoplay` | *boolean*   | `false`             | Specifies if the audio should play when page loads.
 `text`     | *string*    | `You are awesome`   | Specifies the text to be synthesized and spoken.
 `pitch`    | *int*       | `1`                 | Specifies the speaking pitch for the utterance. It ranges between `0` and `2`.
 `rate`     | *int*       | `1`                 | Specifies the speaking rate for the utterance. `1` corresponds to a normal speaking rate. `2` is twice as fast, `0.5` is half as fast, and so on.
 `volume`   | *int*       | `1`                 | Specifies the speaking volume for the utterance. It ranges between `0` and `1`.
+
+### Methods
+
+Method   | Parameters     | Returns             | Description
+---      | ---            | ---                 | ---
+`play()` | None.          | Nothing.            | Triggers the audio to be played.
+
+## &lt;voice-recognition&gt;
+
+Provides you a simple DOM API to do speech synthesis (text to speech).
+
+### Options
+
+Attribute    | Type        | Default             | Description
+---          | ---         | ---                 | ---
+`continuous` | *boolean*   | `false`             | Specifies if the audio should play when page loads.
 
 ### Methods
 
