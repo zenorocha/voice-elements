@@ -54,25 +54,35 @@ Attribute  | Type        | Default             | Description
 
 ### Methods
 
-Method   | Parameters     | Returns             | Description
----      | ---            | ---                 | ---
-`play()` | None.          | Nothing.            | Triggers the audio to be played.
+Method   | Parameters     | Returns            | Description
+---      | ---            | ---                | ---
+`play()` | None.          | Nothing.           | Triggers the audio to be played.
 
 ## &lt;voice-recognition&gt;
 
-Provides you a simple DOM API to do speech synthesis (text to speech).
+Provides you a simple DOM API to do voice recognition (speech to text).
 
 ### Options
 
-Attribute    | Type        | Default             | Description
----          | ---         | ---                 | ---
-`continuous` | *boolean*   | `false`             | Specifies if the audio should play when page loads.
+Attribute    | Type        | Default           | Description
+---          | ---         | ---               | ---
+`continuous` | *boolean*   | `false`           | Specifies if the recognition should continue when the user pauses while speaking.
+`text`       | *string*    |                   | Returns the recognized text.
 
 ### Methods
 
-Method   | Parameters     | Returns             | Description
----      | ---            | ---                 | ---
-`play()` | None.          | Nothing.            | Triggers the audio to be played.
+Method    | Parameters     | Returns           | Description
+---       | ---            | ---               | ---
+`start()` | None.          | Nothing.          | Starts the voice recognition.
+s
+### Events
+
+Event      | Description
+---        | ---
+`onstart`  | Triggers when the recognition begins.
+`onerror`  | Triggers when there's a recognition error.
+`onend`    | Triggers when the recognition ends.
+`onresult` | Triggers when there's a recognition result.
 
 ## Development
 
