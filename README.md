@@ -54,9 +54,12 @@ Attribute  | Type        | Default             | Description
 
 ### Methods
 
-Method    | Parameters     | Returns            | Description
----       | ---            | ---                | ---
-`speak()` | None.          | Nothing.           | Triggers the audio to be played.
+Method     | Parameters     | Returns            | Description
+---        | ---            | ---                | ---
+`speak()`  | None.          | Nothing.           | Triggers the voice audio to be played.
+`cancel()` | None.          | Nothing.           | Triggers the voice audio to be canceled.
+`pause()`  | None.          | Nothing.           | Triggers the voice audio to be paused.
+`resume()` | None.          | Nothing.           | Triggers the voice audio to be resumed.
 
 ## &lt;voice-recognition&gt;
 

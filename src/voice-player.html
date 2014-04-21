@@ -41,6 +41,15 @@
             /* -- Methods --------------------------------------------------- */
             speak: function() {
                 speechSynthesis.speak(this.speech);
+            },
+            cancel: function() {
+                speechSynthesis.cancel();
+            },
+            pause: function() {
+                speechSynthesis.pause();
+            },
+            resume: function() {
+                speechSynthesis.resume();
             }
         });
     </script>
