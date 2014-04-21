@@ -82,7 +82,7 @@
                 <pre><code>&lt;voice-player autoplay text="Welcome to the jungle! hahaha just kidding!"&gt;&lt;/voice-player&gt;</code></pre>
 
                 <!-- Demo #2 -->
-                <p>In the following demo, the <strong>text</strong> attribute is set according to the input value. When the form is submitted, we call the <strong>play</strong> method to trigger the audio.</p>
+                <p>In the following demo, the <strong>text</strong> attribute is set according to the input value. When the form is submitted, we call the <strong>speak</strong> method to trigger the audio.</p>
 
                 <voice-player id="player-element" text=""></voice-player>
                 <script>
@@ -99,7 +99,7 @@
 
                     form.addEventListener('submit', function(e) {
                         e.preventDefault();
-                        element.play();
+                        element.speak();
                     });
                 });
                 </script>
@@ -126,7 +126,7 @@ input.addEventListener('input', function(e) {
 
 form.addEventListener('submit', function(e) {
     e.preventDefault();
-    element.play();
+    element.speak();
 });
 &lt;/script&gt;
 </code></pre>

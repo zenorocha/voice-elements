@@ -29,7 +29,7 @@
                 this.volumeChanged();
 
                 if (this.autoplay) {
-                    this.play();
+                    this.speak();
                 }
             },
 
@@ -39,7 +39,7 @@
             volumeChanged: function() { this.speech.volume = this.volume; },
 
             /* -- Methods --------------------------------------------------- */
-            play: function() {
+            speak: function() {
                 speechSynthesis.speak(this.speech);
             }
         });

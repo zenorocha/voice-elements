@@ -54,9 +54,9 @@ Attribute  | Type        | Default             | Description
 
 ### Methods
 
-Method   | Parameters     | Returns            | Description
----      | ---            | ---                | ---
-`play()` | None.          | Nothing.           | Triggers the audio to be played.
+Method    | Parameters     | Returns            | Description
+---       | ---            | ---                | ---
+`speak()` | None.          | Nothing.           | Triggers the audio to be played.
 
 ## &lt;voice-recognition&gt;
 
