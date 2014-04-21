@@ -6,28 +6,32 @@
 
 [Check it live!](http://zenorocha.github.io/voice-elements)
 
+## Install
+
+Install the component using [Bower](http://bower.io/):
+
+```sh
+$ bower install voice-elements --save
+```
+
+Or [download as ZIP](https://github.com/zenorocha/voice-elements/archive/gh-pages.zip).
+
 ## Usage
 
-1. Install the component using [Bower](http://bower.io/):
-
-    ```sh
-    $ bower install voice-elements --save
-    ```
-
-2. Import Web Components' polyfill:
+1. Import Web Components' polyfill:
 
     ```html
     <script src="bower_components/platform/platform.js"></script>
     ```
 
-3. Import Custom Element:
+2. Import Custom Element:
 
     ```html
     <link rel="import" href="bower_components/voice-elements/dist/voice-player.html">
     <link rel="import" href="bower_components/voice-elements/dist/voice-recognition.html">
     ```
 
-4. Start using it!
+3. Start using it!
 
     ```html
     <voice-player></voice-player>
