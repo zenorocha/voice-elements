@@ -18,19 +18,23 @@
                     console.error('Your browser do not support the Web Speech API');
                 }
             },
-
             ready: function() {
                 this.recognition.continuous = this.continuous;
                 this.recognition.interimResults = false;
 
+                // Initialize event listeners
                 this.onStart();
                 this.onError();
                 this.onEnd();
                 this.onResult();
             },
+
+            /* -- Methods --------------------------------------------------- */
             start: function() {
                 this.recognition.start();
             },
+
+            /* -- Events ---------------------------------------------------- */
             onStart: function() {
                 var that = this;
 
