@@ -8,9 +8,6 @@
             /* -- Attributes ------------------------------------------------ */
             autoplay: false,
             text: 'You are awesome',
-            pitch: 1,
-            rate: 1,
-            volume: 1,
 
             /* -- Lifecycle ------------------------------------------------- */
             created: function() {
@@ -25,9 +22,6 @@
             ready: function() {
                 // Initialize attributes
                 this.textChanged();
-                this.pitchChanged();
-                this.rateChanged();
-                this.volumeChanged();
 
                 // Initialize event listeners
                 this.onStart();
@@ -41,10 +35,9 @@
                 }
             },
 
-            textChanged  : function() { this.speech.text = this.text;     },
-            pitchChanged : function() { this.speech.pitch = this.pitch;   },
-            rateChanged  : function() { this.speech.rate = this.rate;     },
-            volumeChanged: function() { this.speech.volume = this.volume; },
+            textChanged: function() {
+                this.speech.text = this.text;
+            },
 
             /* -- Methods --------------------------------------------------- */
             speak: function() {

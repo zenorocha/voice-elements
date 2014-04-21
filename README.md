@@ -48,9 +48,6 @@ Attribute  | Type        | Default             | Description
 ---        | ---         | ---                 | ---
 `autoplay` | *boolean*   | `false`             | Specifies if the audio should play when page loads.
 `text`     | *string*    | `You are awesome`   | Specifies the text to be synthesized and spoken.
-`pitch`    | *int*       | `1`                 | Specifies the speaking pitch for the utterance. It ranges between `0` and `2`.
-`rate`     | *int*       | `1`                 | Specifies the speaking rate for the utterance. `1` corresponds to a normal speaking rate. `2` is twice as fast, `0.5` is half as fast, and so on.
-`volume`   | *int*       | `1`                 | Specifies the speaking volume for the utterance. It ranges between `0` and `1`.
 
 ### Methods
 
