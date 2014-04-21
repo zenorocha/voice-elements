@@ -220,6 +220,7 @@ a.pure-button-primary {
 .center {
     max-width: 768px;
     margin: 0 auto;
+    display: block;
 }
 
 .example {
