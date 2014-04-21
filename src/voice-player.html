@@ -23,10 +23,18 @@
             },
 
             ready: function() {
+                // Initialize attributes
                 this.textChanged();
                 this.pitchChanged();
                 this.rateChanged();
                 this.volumeChanged();
+
+                // Initialize event listeners
+                this.onStart();
+                this.onEnd();
+                this.onError();
+                this.onPause();
+                this.onResume();
 
                 if (this.autoplay) {
                     this.speak();
@@ -51,6 +59,42 @@
             resume: function() {
                 window.speechSynthesis.resume();
             },
+
+            /* -- Events ---------------------------------------------------- */
+            onStart: function() {
+                var that = this;
+
+                this.speech.addEventListener('start', function(e) {
+                    that.fire('start', e);
+                });
+            },
+            onEnd: function() {
+                var that = this;
+
+                this.speech.addEventListener('end', function(e) {
+                    that.fire('end', e);
+                });
+            },
+            onError: function() {
+                var that = this;
+
+                this.speech.addEventListener('error', function(e) {
+                    that.fire('error', e);
+                });
+            },
+            onPause: function() {
+                var that = this;
+
+                this.speech.addEventListener('pause', function(e) {
+                    that.fire('pause', e);
+                });
+            },
+            onResume: function() {
+                var that = this;
+
+                this.speech.addEventListener('resume', function(e) {
+                    that.fire('resume', e);
+                });
             }
         });
     </script>

@@ -61,6 +61,16 @@ Method     | Parameters     | Returns            | Description
 `pause()`  | None.          | Nothing.           | Triggers the voice audio to be paused.
 `resume()` | None.          | Nothing.           | Triggers the voice audio to be resumed.
 
+### Events
+
+Event      | Description
+---        | ---
+`onstart`  | Triggers when the voice begun to be spoken.
+`onend`    | Triggers when the voice completed to be spoken.
+`onerror`  | Triggers when the voice player detects an error.
+`onpause`  | Triggers when the voice player is resumed.
+`onresume` | Triggers when the voice player is resumed.
+
 ## &lt;voice-recognition&gt;
 
 Provides you a simple DOM API to do voice recognition (speech to text).
