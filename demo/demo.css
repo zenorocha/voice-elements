@@ -30,7 +30,6 @@ pre {
     white-space: pre;
     white-space: pre-wrap;
     background-color: #f8f8f8;
-    border: 1px solid #ccc;
     border-radius: 4px;
     font-family: Monaco, Consolas, "Lucida Console", monospace;
 }
@@ -45,7 +44,6 @@ pre {
 
 .l-box-lrg {
     padding: 2em;
-    border-bottom: 1px solid rgba(0,0,0,0.1);
 }
 
 .is-center {
@@ -217,7 +215,6 @@ a.pure-button-primary {
     margin: 15px 0;
     padding: 39px 19px 14px;
     background-color: #fff;
-    border: 1px solid #ddd;
     border-radius: 4px 4px 0 0;
 }
 
@@ -228,13 +225,12 @@ a.pure-button-primary {
 .example:after {
     content: "Example";
     position: absolute;
-    top: -1px;
-    left: -1px;
-    padding: 3px 7px;
+    top: 0;
+    left: 0;
+    padding: 2px 8px;
     font-size: 12px;
     font-weight: bold;
     background-color: #f5f5f5;
-    border: 1px solid #ddd;
     color: #9da0a4;
     border-radius: 4px 0 4px 0;
 }
@@ -251,8 +247,8 @@ a.pure-button-primary {
     background-color: #fff;
     border-radius: 4px;
     border-collapse: separate;
-    border-color: #f5f5f5;
     overflow: hidden;
+    border: 0;
 }
 
 .pure-table thead {
@@ -331,11 +327,6 @@ a.pure-button-primary {
 
     .splash-first-line {
         padding-right: 150px;
-    }
-
-    /* We remove the border-separator assigned to .l-box-lrg */
-    .l-box-lrg {
-        border: none;
     }
 
 }
