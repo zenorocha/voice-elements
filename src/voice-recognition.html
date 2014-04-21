@@ -12,7 +12,7 @@
             /* -- Lifecycle ------------------------------------------------- */
             created: function() {
                 if ('webkitSpeechRecognition' in window) {
-                    this.recognition = new webkitSpeechRecognition();
+                    this.recognition = new window.webkitSpeechRecognition();
                 }
                 else {
                     console.error('Your browser do not support the Web Speech API');

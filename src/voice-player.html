@@ -40,16 +40,17 @@
 
             /* -- Methods --------------------------------------------------- */
             speak: function() {
-                speechSynthesis.speak(this.speech);
+                window.speechSynthesis.speak(this.speech);
             },
             cancel: function() {
-                speechSynthesis.cancel();
+                window.speechSynthesis.cancel();
             },
             pause: function() {
-                speechSynthesis.pause();
+                window.speechSynthesis.pause();
             },
             resume: function() {
-                speechSynthesis.resume();
+                window.speechSynthesis.resume();
+            },
             }
         });
     </script>
