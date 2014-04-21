@@ -85,6 +85,8 @@ Attribute    | Options        | Default           | Description
 Method    | Parameters     | Returns           | Description
 ---       | ---            | ---               | ---
 `start()` | None.          | Nothing.          | Starts the voice recognition.
+`stop()`  | None.          | Nothing.          | Requests to recognition service to stop listening to more audio.
+`abort()` | None.          | Nothing.          | Requests to immediately stop listening and stop recognizing.
 
 ### Events
 
