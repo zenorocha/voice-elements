@@ -30,12 +30,13 @@
     <div class="splash-container">
         <div class="splash">
             <h1 class="splash-head">
-                <div class="splash-first-line">&lt;<span class="highlight">voice</span></div><br><span class="highlight">elements</span>&gt;
+                <div class="splash-first-line">&lt;<span class="highlight">voice</span></div>
+                <div class="splash-second-line"><span class="highlight">elements</span>&gt;</div>
             </h1>
             <p class="splash-subhead">
                 A couple of Web Components that can do<br>amazing stuff using the Web Speech API
             </p>
-            <p class="gh-btns">
+            <p class="gh-btns pure-hidden-phone">
                 <iframe src="http://ghbtns.com/github-btn.html?user=zenorocha&repo=alfred-workflows&type=watch&count=true&size=large"
   allowtransparency="true" frameborder="0" scrolling="0" width="152" height="30"></iframe>
                 <iframe src="http://ghbtns.com/github-btn.html?user=zenorocha&repo=alfred-workflows&type=fork&count=true&size=large"
@@ -51,7 +52,7 @@
         <div class="content">
             <h2 class="content-head is-center">Install</h2>
 
-            <div class="pure-g-r" style="margin-bottom: 2em;">
+            <div class="section pure-g-r">
                 <div class="center">
                     <div class="pure-u-1">
                         <h3 class="content-subhead">Install the component using Bower</h3>
@@ -65,14 +66,14 @@
 
         <!-- Voice Player -->
         <div class="ribbon l-box-lrg pure-g">
-            <div class="pure-u-1 pure-u-med-1-2 pure-u-lrg-3-5 center">
+            <div class="center section pure-u-1 pure-u-med-1-2 pure-u-lrg-3-5">
                 <h2 class="content-head content-head-ribbon">&lt;voice-player&gt;</h2>
                 <p>Provides you a simple DOM API to do speech synthesis (text to speech).</p>
 
                 <!-- Demo #1 -->
                 <p>In the following demo, we set some content into the <strong>text</strong> attribute. Then, by using the <strong>autoplay</strong> attribute, the voice is played when the element loads.</p>
 
-                <voice-player autoplay text="Welcome to the jungle! hahaha just kidding! Welcome to the Voice Elements demonstration page"></voice-player>
+                <!-- <voice-player autoplay text="Welcome to the jungle! hahaha just kidding! Welcome to the Voice Elements demonstration page"></voice-player> -->
 
                 <div class="example">
                     <p>Reload the page to hear it again.</p>
@@ -204,7 +205,7 @@ form.addEventListener('submit', function(e) {
         <div class="features content">
             <h2 class="content-head is-center">Features</h2>
 
-            <div class="pure-g-r center">
+            <div class="center section pure-g-r">
                 <div class="l-box pure-u-1-2">
                     <h3 class="content-subhead">
                         Voice recognition (speech to text)
@@ -226,7 +227,7 @@ form.addEventListener('submit', function(e) {
 
         <!-- Voice Recognition -->
         <div class="ribbon l-box-lrg pure-g">
-            <div class="pure-u-1 pure-u-med-1-2 pure-u-lrg-3-5 center">
+            <div class="section pure-u-1 pure-u-med-1-2 pure-u-lrg-3-5 center">
                 <h2 class="content-head content-head-ribbon">&lt;voice-recognition&gt;</h2>
                 <p>Provides you a simple DOM API to do voice recognition (speech to text).</p>
 
@@ -368,7 +369,7 @@ element.addEventListener('result', function(e) {
         <div class="content">
             <h2 class="content-head is-center">Usage</h2>
 
-            <div class="pure-g-r center" style="margin-bottom: 3em;">
+            <div class="section pure-g-r center">
                 <div class="pure-u-1">
                     <h3 class="content-subhead">1. Import Web Components' polyfill</h3>
                     <pre><code>&lt;script src="bower_components/platform/platform.js"&gt;&lt;/script&gt;</code></pre>

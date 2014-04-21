@@ -11,7 +11,7 @@
 body {
     line-height: 1.7em;
     color: #7f8c8d;
-    font-size: 13px;
+    font-size: 14px;
     font-family: 'Roboto Slab', serif;
 }
 
@@ -44,6 +44,10 @@ pre {
 
 .l-box-lrg {
     padding: 2em;
+}
+
+.section {
+    margin-bottom: 2em !important;
 }
 
 .is-center {
@@ -116,10 +120,9 @@ a.pure-button-primary {
 
 /* This is the main heading that appears on the blue section */
 .splash-head {
-    font-size: 40px;
+    font-size: 45px;
     font-weight: bold;
     color: white;
-    padding: 0 1.6em;
     font-weight: 100;
     border-radius: 5px;
     line-height: 1em;
@@ -132,6 +135,10 @@ a.pure-button-primary {
     display: inline;
 }
 
+.splash-second-line {
+    display: inline-block;
+}
+
 .highlight {
     color: rgba(255, 255, 255, 1);
 }
@@ -139,6 +146,7 @@ a.pure-button-primary {
 /* This is the subheading that appears on the blue section */
 .splash-subhead {
     color: white;
+    font-size: 13px;
     letter-spacing: 0.05em;
     opacity: 0.8;
     text-transform: uppercase;
@@ -161,6 +169,10 @@ a.pure-button-primary {
     min-height: 12%;
     z-index: 2;
     background: white;
+}
+
+.content {
+    padding: 1em;
 }
 
 /* This is the class used for the main content headers (<h2>) */
@@ -311,34 +323,19 @@ a.pure-button-primary {
    ========================================================================== */
 
 @media (min-width: 48em) {
-
-    /* We increase the body font size */
     body {
         font-size: 16px;
     }
-    /* We want to give the content area some more padding */
-    .content {
-        padding: 1em;
-    }
 
-    .splash-head {
-        font-size: 50px;
-    }
-
-    .splash-first-line {
-        padding-right: 150px;
-    }
-
-}
-
-/* Desktop (and up)
-   ========================================================================== */
-@media (min-width: 78em) {
     .splash-head {
         font-size: 70px;
     }
 
     .splash-first-line {
         padding-right: 183px;
+    }
+
+    .splash-subhead {
+        font-size: 14px;
     }
 }
