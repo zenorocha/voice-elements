@@ -82,6 +82,42 @@
                 <pre><code>&lt;voice-player autoplay text="Welcome to the jungle! hahaha just kidding!"&gt;&lt;/voice-player&gt;</code></pre>
 
                 <!-- Demo #2 -->
+                <p>In the following demo, we define a different language by using the <strong>accent</strong> attribute. When the button is clicked, we call the <strong>speak</strong> method to trigger the audio.</p>
+
+                <voice-player id="mi-elemento" accent="es-ES" text="Me gusta la gasolina (Dame más gasolina!)"></voice-player>
+                <script>
+                window.addEventListener('polymer-ready', function(e) {
+                    var form = document.querySelector('#mi-form'),
+                        element = document.querySelector('#mi-elemento');
+
+                    form.addEventListener('submit', function(e) {
+                        e.preventDefault();
+                        element.speak();
+                    });
+                });
+                </script>
+
+                <div class="example">
+                    <form id="mi-form" class="pure-form">
+                        <fieldset>
+                            <button class="pure-button pure-button-primary">¡Habla</button>
+                        </fieldset>
+                    </form>
+                </div>
+
+                <pre><code>&lt;voice-player id="mi-elemento" accent="es-ES" text="Me gusta la gasolina">&lt;/voice-player&gt;
+
+&lt;script&gt;
+var form = document.querySelector('#mi-form'),
+    element = document.querySelector('#mi-elemento');
+
+form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    element.speak();
+});
+&lt;/script&gt;</code></pre>
+
+                <!-- Demo #3 -->
                 <p>In the following demo, the <strong>text</strong> attribute is set according to the input value. When the form is submitted, we call the <strong>speak</strong> method to trigger the audio.</p>
 
                 <voice-player id="player-element" text=""></voice-player>
@@ -137,7 +173,7 @@ form.addEventListener('submit', function(e) {
                     <thead>
                         <tr>
                             <th>Attribute</th>
-                            <th>Type</th>
+                            <th>Options</th>
                             <th>Default</th>
                             <th>Description</th>
                         </tr>
@@ -149,6 +185,12 @@ form.addEventListener('submit', function(e) {
                             <td>boolean</td>
                             <td>false</td>
                             <td>Specifies if the audio should play when page loads.</td>
+                        </tr>
+                        <tr>
+                            <td>accent</td>
+                            <td>en-US, en-GB, es-ES, fr-FR, it-IT, de-DE, ja-JP, ko-KR, zh-CN</td>
+                            <td>en-US</td>
+                            <td>Specifies the language to be synthesized and spoken.</td>
                         </tr>
                         <tr>
                             <td>text</td>
@@ -323,7 +365,7 @@ element.addEventListener('result', function(e) {
                     <thead>
                         <tr>
                             <th>Attribute</th>
-                            <th>Type</th>
+                            <th>Options</th>
                             <th>Default</th>
                             <th>Description</th>
                         </tr>

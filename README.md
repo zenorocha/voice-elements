@@ -44,9 +44,10 @@ Provides you a simple DOM API to do speech synthesis (text to speech).
 
 ### Options
 
-Attribute  | Type        | Default             | Description
+Attribute  | Options        | Default             | Description
 ---        | ---         | ---                 | ---
 `autoplay` | *boolean*   | `false`             | Specifies if the audio should play when page loads.
+`accent`   | `en-US`, `en-GB`, `es-ES`, `fr-FR`, `it-IT`, `de-DE`, `ja-JP`, `ko-KR`, `zh-CN`    | `en-US`    | Specifies the language to be synthesized and spoken.
 `text`     | *string*    | `You are awesome`   | Specifies the text to be synthesized and spoken.
 
 ### Methods
@@ -74,7 +75,7 @@ Provides you a simple DOM API to do voice recognition (speech to text).
 
 ### Options
 
-Attribute    | Type        | Default           | Description
+Attribute    | Options        | Default           | Description
 ---          | ---         | ---               | ---
 `continuous` | *boolean*   | `false`           | Specifies if the recognition should continue when the user pauses while speaking.
 `text`       | *string*    |                   | Returns the recognized text.
