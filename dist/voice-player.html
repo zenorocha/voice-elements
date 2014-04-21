@@ -2,15 +2,13 @@
 <link rel="import" href="../../polymer/polymer.html">
 
 <!-- Define your custom element -->
-<polymer-element name="voice-player" attributes="autoplay text pitch rate volume">
+<polymer-element name="voice-player" attributes="autoplay accent text">
     <script>
         Polymer('voice-player', {
             /* -- Attributes ------------------------------------------------ */
             autoplay: false,
-            text: 'You have reached your destination',
-            pitch: 1,
-            rate: 1,
-            volume: 1,
+            accent: 'en-US',
+            text: 'You are awesome',
 
             /* -- Lifecycle ------------------------------------------------- */
             created: function() {
@@ -21,26 +19,78 @@
                     console.error('Your browser do not support the Web Speech API');
                 }
             },
-
             ready: function() {
+                // Initialize attributes
                 this.textChanged();
-                this.pitchChanged();
-                this.rateChanged();
-                this.volumeChanged();
+                this.accentChanged();
+
+                // Initialize event listeners
+                this.onStart();
+                this.onEnd();
+                this.onError();
+                this.onPause();
+                this.onResume();
 
                 if (this.autoplay) {
-                    this.play();
+                    this.speak();
                 }
             },
-
-            textChanged  : function() { this.speech.text = this.text;     },
-            pitchChanged : function() { this.speech.pitch = this.pitch;   },
-            rateChanged  : function() { this.speech.rate = this.rate;     },
-            volumeChanged: function() { this.speech.volume = this.volume; },
+            accentChanged: function() {
+                this.speech.lang = this.accent;
+            },
+            textChanged: function() {
+                this.speech.text = this.text;
+            },
 
             /* -- Methods --------------------------------------------------- */
-            play: function() {
-                speechSynthesis.speak(this.speech);
+            speak: function() {
+                window.speechSynthesis.speak(this.speech);
+            },
+            cancel: function() {
+                window.speechSynthesis.cancel();
+            },
+            pause: function() {
+                window.speechSynthesis.pause();
+            },
+            resume: function() {
+                window.speechSynthesis.resume();
+            },
+
+            /* -- Events ---------------------------------------------------- */
+            onStart: function() {
+                var that = this;
+
+                this.speech.addEventListener('start', function(e) {
+                    that.fire('start', e);
+                });
+            },
+            onEnd: function() {
+                var that = this;
+
+                this.speech.addEventListener('end', function(e) {
+                    that.fire('end', e);
+                });
+            },
+            onError: function() {
+                var that = this;
+
+                this.speech.addEventListener('error', function(e) {
+                    that.fire('error', e);
+                });
+            },
+            onPause: function() {
+                var that = this;
+
+                this.speech.addEventListener('pause', function(e) {
+                    that.fire('pause', e);
+                });
+            },
+            onResume: function() {
+                var that = this;
+
+                this.speech.addEventListener('resume', function(e) {
+                    that.fire('resume', e);
+                });
             }
         });
     </script>
