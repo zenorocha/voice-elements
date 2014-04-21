@@ -1,4 +1,4 @@
-# &lt;voice-elements&gt; [![Bower Version](https://badge.fury.io/bo/voice-elements.svg)]() [![Custom Elements](http://img.shields.io/badge/custom-elements-9073c0.svg)]()
+# &lt;voice-elements&gt; ![Bower Version](https://badge.fury.io/bo/voice-elements.svg)
 
 > Web Component wrapper to the [Web Speech API](https://dvcs.w3.org/hg/speech-api/raw-file/tip/speechapi.html), that allows you to do voice recognition (speech to text) and speech synthesis (text to speech) using [Polymer](http://www.polymer-project.org/).
 
@@ -74,7 +74,7 @@ Attribute    | Type        | Default           | Description
 Method    | Parameters     | Returns           | Description
 ---       | ---            | ---               | ---
 `start()` | None.          | Nothing.          | Starts the voice recognition.
-s
+
 ### Events
 
 Event      | Description
