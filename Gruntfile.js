@@ -22,10 +22,10 @@ module.exports = function(grunt) {
         bump: {
             options: {
                 commit: true,
-                commitFiles: ['bower.json', 'package.json', 'dist/*'],
+                commitFiles: ['bower.json', 'dist/*'],
                 commitMessage: 'Release v%VERSION%',
                 createTag: true,
-                files: ['bower.json', 'package.json'],
+                files: ['bower.json'],
                 push: true,
                 pushTo: 'origin gh-pages',
                 tagMessage: '',
