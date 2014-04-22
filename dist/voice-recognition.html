@@ -23,40 +23,46 @@
                 this.recognition.interimResults = false;
 
                 // Initialize event listeners
-                this.onStart();
-                this.onError();
-                this.onEnd();
-                this.onResult();
+                this.bindStart();
+                this.bindError();
+                this.bindEnd();
+                this.bindResult();
             },
 
             /* -- Methods --------------------------------------------------- */
             start: function() {
                 this.recognition.start();
             },
+            stop: function() {
+                this.recognition.stop();
+            },
+            abort: function() {
+                this.recognition.abort();
+            },
 
             /* -- Events ---------------------------------------------------- */
-            onStart: function() {
+            bindStart: function() {
                 var that = this;
 
                 this.recognition.addEventListener('start', function(e) {
                     that.fire('start', e);
                 });
             },
-            onError: function() {
+            bindError: function() {
                 var that = this;
 
                 this.recognition.addEventListener('error', function(e) {
                     that.fire('error', e);
                 });
             },
-            onEnd: function() {
+            bindEnd: function() {
                 var that = this;
 
                 this.recognition.addEventListener('end', function(e) {
                     that.fire('end', e);
                 });
             },
-            onResult: function() {
+            bindResult: function() {
                 var that = this;
 
                 this.recognition.addEventListener('result', function(e) {
