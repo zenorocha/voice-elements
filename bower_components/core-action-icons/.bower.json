@@ -1,0 +1,14 @@
+{
+  "name": "core-action-icons",
+  "homepage": "https://github.com/Polymer/core-action-icons",
+  "version": "0.2.3",
+  "_release": "0.2.3",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.2.3",
+    "commit": "2dbce5513e3332498bd8b7838ba5f26b8579db92"
+  },
+  "_source": "git://github.com/Polymer/core-action-icons.git",
+  "_target": "0.2.3",
+  "_originalSource": "Polymer/core-action-icons"
+}
