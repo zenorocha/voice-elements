@@ -97,6 +97,14 @@ Event      | Description
 `onend`    | Triggers when the recognition ends.
 `onresult` | Triggers when there's a recognition result.
 
+## Browser Support
+
+Unfortunately, the [Web Speech API](https://dvcs.w3.org/hg/speech-api/raw-file/tip/speechapi.html) still have a poor support. Check [Can I Use](http://caniuse.com/#feat=web-speech) for more information.
+
+![IE](https://raw.github.com/alrra/browser-logos/master/internet-explorer/internet-explorer_48x48.png) | ![Chrome](https://raw.github.com/alrra/browser-logos/master/chrome/chrome_48x48.png) | ![Firefox](https://raw.github.com/alrra/browser-logos/master/firefox/firefox_48x48.png) | ![Opera](https://raw.github.com/alrra/browser-logos/master/opera/opera_48x48.png) | ![Safari](https://raw.github.com/alrra/browser-logos/master/safari/safari_48x48.png)
+--- | --- | --- | --- | --- |
+None ✘ | Latest ✔ | None ✘ | None ✘ | Latest ✔ |
+
 ## Development
 
 In order to run it locally you'll need to fetch some dependencies and a basic server setup.
