@@ -110,7 +110,7 @@ a.pure-button-primary {
 
 .splash {
     /* absolute center .splash within .splash-container */
-    width: 50%;
+    width: 350px;
     height: 50%;
     margin: auto;
     position: absolute;
@@ -257,6 +257,7 @@ a.pure-button-primary {
    ========================================================================== */
 
 .pure-table {
+    font-size: 12px;
     background-color: #fff;
     border-radius: 4px;
     border-collapse: separate;
@@ -328,6 +329,10 @@ a.pure-button-primary {
         font-size: 16px;
     }
 
+    .splash {
+        width: 400px;
+    }
+
     .splash-head {
         font-size: 70px;
     }
@@ -338,5 +343,9 @@ a.pure-button-primary {
 
     .splash-subhead {
         font-size: 14px;
+    }
+
+    .pure-table {
+        font-size: 16px;
     }
 }
