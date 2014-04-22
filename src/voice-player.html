@@ -25,11 +25,11 @@
                 this.accentChanged();
 
                 // Initialize event listeners
-                this.onStart();
-                this.onEnd();
-                this.onError();
-                this.onPause();
-                this.onResume();
+                this.bindStart();
+                this.bindEnd();
+                this.bindError();
+                this.bindPause();
+                this.bindResume();
 
                 if (this.autoplay) {
                     this.speak();
@@ -57,35 +57,35 @@
             },
 
             /* -- Events ---------------------------------------------------- */
-            onStart: function() {
+            bindStart: function() {
                 var that = this;
 
                 this.speech.addEventListener('start', function(e) {
                     that.fire('start', e);
                 });
             },
-            onEnd: function() {
+            bindEnd: function() {
                 var that = this;
 
                 this.speech.addEventListener('end', function(e) {
                     that.fire('end', e);
                 });
             },
-            onError: function() {
+            bindError: function() {
                 var that = this;
 
                 this.speech.addEventListener('error', function(e) {
                     that.fire('error', e);
                 });
             },
-            onPause: function() {
+            bindPause: function() {
                 var that = this;
 
                 this.speech.addEventListener('pause', function(e) {
                     that.fire('pause', e);
                 });
             },
-            onResume: function() {
+            bindResume: function() {
                 var that = this;
 
                 this.speech.addEventListener('resume', function(e) {
