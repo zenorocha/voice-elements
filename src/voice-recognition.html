@@ -17,7 +17,7 @@
                                         window.msSpeechRecognition ||
                                         window.oSpeechRecognition;
 
-                if (!SpeechRecognition) {
+                if (SpeechRecognition !== undefined) {
                     this.recognition = new SpeechRecognition();
                 }
                 else {
