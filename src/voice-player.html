@@ -1,0 +1,98 @@
+<!-- Import Polymer -->
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<!-- Define your custom element -->
+<polymer-element name="voice-player" attributes="autoplay accent text">
+    <script>
+        Polymer('voice-player', {
+            /* -- Attributes ------------------------------------------------ */
+            autoplay: false,
+            accent: 'en-US',
+            text: 'You are awesome',
+
+            /* -- Lifecycle ------------------------------------------------- */
+            created: function() {
+                if ('speechSynthesis' in window) {
+                    this.speech = new SpeechSynthesisUtterance();
+                }
+                else {
+                    console.error('Your browser do not support the Web Speech API');
+                }
+            },
+            ready: function() {
+                // Initialize attributes
+                this.textChanged();
+                this.accentChanged();
+
+                // Initialize event listeners
+                this.bindStart();
+                this.bindEnd();
+                this.bindError();
+                this.bindPause();
+                this.bindResume();
+
+                if (this.autoplay) {
+                    this.speak();
+                }
+            },
+            accentChanged: function() {
+                this.speech.lang = this.accent;
+            },
+            textChanged: function() {
+                this.speech.text = this.text;
+            },
+
+            /* -- Methods --------------------------------------------------- */
+            speak: function() {
+                window.speechSynthesis.speak(this.speech);
+            },
+            cancel: function() {
+                window.speechSynthesis.cancel();
+            },
+            pause: function() {
+                window.speechSynthesis.pause();
+            },
+            resume: function() {
+                window.speechSynthesis.resume();
+            },
+
+            /* -- Events ---------------------------------------------------- */
+            bindStart: function() {
+                var that = this;
+
+                this.speech.addEventListener('start', function(e) {
+                    that.fire('start', e);
+                });
+            },
+            bindEnd: function() {
+                var that = this;
+
+                this.speech.addEventListener('end', function(e) {
+                    that.fire('end', e);
+                });
+            },
+            bindError: function() {
+                var that = this;
+
+                this.speech.addEventListener('error', function(e) {
+                    that.fire('error', e);
+                });
+            },
+            bindPause: function() {
+                var that = this;
+
+                this.speech.addEventListener('pause', function(e) {
+                    that.fire('pause', e);
+                });
+            },
+            bindResume: function() {
+                var that = this;
+
+                this.speech.addEventListener('resume', function(e) {
+                    that.fire('resume', e);
+                });
+            }
+        });
+    </script>
+
+</polymer-element>

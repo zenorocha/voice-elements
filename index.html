@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A couple of Web Components that can do amazing stuff using the Web Speech API.">
+
+    <!-- Facebook Metatags -->
+    <meta property="fb:app_id" content="1502439096643233">
+    <meta property="og:title" content="<voice-elements>">
+    <meta property="og:description" content="A couple of Web Components that can do amazing stuff using the Web Speech API.">
+    <meta property="og:url" content="http://zenorocha.github.io/voice-elements/">
+    <meta property="og:image" content="http://zenorocha.github.io/voice-elements/demo/fb.jpg">
+
+    <title>&lt;voice-elements&gt;</title>
+
+    <!-- Demo CSS -->
+    <link rel="icon" href="https://github.global.ssl.fastly.net/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.4.2/pure.css">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto+Slab">
+    <link rel="stylesheet" href="demo/demo.css">
+
+    <!-- Importing Web Component's Polyfill -->
+    <script src="bower_components/platform/platform.js"></script>
+
+    <!-- Importing Custom Elements -->
+    <link rel="import" href="src/voice-player.html">
+    <link rel="import" href="src/voice-recognition.html">
+</head>
+<body>
+
+    <!-- Support Warning -->
+    <div class="brower-support">
+        <p>Sorry, your browser <a href="http://caniuse.com/#feat=web-speech">do not support</a> the Web Speech API :(</p>
+    </div>
+
+    <!-- Splash Screen -->
+    <div class="splash-container">
+        <div class="splash">
+            <h1 class="splash-head">
+                <div class="splash-first-line">&lt;<span class="highlight">voice</span></div>
+                <div class="splash-second-line"><span class="highlight">elements</span>&gt;</div>
+            </h1>
+            <p class="splash-subhead">
+                A couple of Web Components that can do<br>amazing stuff using the Web Speech API
+            </p>
+            <p class="gh-btns pure-hidden-phone">
+                <iframe src="http://ghbtns.com/github-btn.html?user=zenorocha&repo=voice-elements&type=watch&count=true&size=large"
+  allowtransparency="true" frameborder="0" scrolling="0" width="152" height="30"></iframe>
+                <iframe src="http://ghbtns.com/github-btn.html?user=zenorocha&repo=voice-elements&type=fork&count=true&size=large"
+  allowtransparency="true" frameborder="0" scrolling="0" width="156" height="30"></iframe>
+            </p>
+        </div>
+    </div>
+
+    <!-- Content Wrapper -->
+    <div class="content-wrapper">
+
+        <!-- Install -->
+        <div class="content">
+            <h2 class="content-head is-center">Install</h2>
+
+            <div class="section pure-g-r">
+                <div class="center">
+                    <div class="pure-u-1">
+                        <h3 class="content-subhead">Install the component using Bower</h3>
+                        <pre>$ bower install voice-elements</pre>
+                        <a class="pure-button" href="https://github.com/zenorocha/voice-elements/fork">Fork on GitHub</a>
+                        <a class="pure-button" href="https://github.com/zenorocha/voice-elements/archive/gh-pages.zip">Download as ZIP</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Voice Player -->
+        <div class="ribbon l-box-lrg pure-g">
+            <div class="center section pure-u-1 pure-u-med-1-2 pure-u-lrg-3-5">
+                <h2 class="content-head content-head-ribbon">&lt;voice-player&gt;</h2>
+                <p>Provides you a simple DOM API to do speech synthesis (text to speech).</p>
+
+                <!-- Demo #1 -->
+                <p>In the following demo, we set some content into the <strong>text</strong> attribute. Then, by using the <strong>autoplay</strong> attribute, the voice is played when the element loads.</p>
+
+                <voice-player autoplay text="Welcome to the jungle! hahaha just kidding! Welcome to the Voice Elements demonstration page"></voice-player>
+
+                <div class="example">
+                    <p>Reload the page to hear it again.</p>
+                </div>
+
+                <pre><code>&lt;voice-player autoplay text="Welcome to the jungle! hahaha just kidding!"&gt;&lt;/voice-player&gt;</code></pre>
+
+                <!-- Demo #2 -->
+                <p>In the following demo, we define a different language by using the <strong>accent</strong> attribute. When the button is clicked, we call the <strong>speak</strong> method to trigger the audio.</p>
+
+                <voice-player id="mi-elemento" accent="es-ES" text="Me gusta la gasolina (Dame más gasolina!)"></voice-player>
+                <script>
+                window.addEventListener('polymer-ready', function(e) {
+                    var form = document.querySelector('#mi-form'),
+                        element = document.querySelector('#mi-elemento');
+
+                    form.addEventListener('submit', function(e) {
+                        e.preventDefault();
+                        element.speak();
+                    });
+                });
+                </script>
+
+                <div class="example">
+                    <form id="mi-form" class="pure-form">
+                        <fieldset>
+                            <button class="pure-button pure-button-primary">¡Habla</button>
+                        </fieldset>
+                    </form>
+                </div>
+
+                <pre><code>&lt;voice-player id="mi-elemento" accent="es-ES" text="Me gusta la gasolina">&lt;/voice-player&gt;
+
+&lt;script&gt;
+var form = document.querySelector('#mi-form'),
+    element = document.querySelector('#mi-elemento');
+
+form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    element.speak();
+});
+&lt;/script&gt;</code></pre>
+
+                <!-- Demo #3 -->
+                <p>In the following demo, the <strong>text</strong> attribute is set according to the input value. When the form is submitted, we call the <strong>speak</strong> method to trigger the audio.</p>
+
+                <voice-player id="player-element" text=""></voice-player>
+                <script>
+                window.addEventListener('polymer-ready', function(e) {
+                    var form = document.querySelector('#player-form'),
+                        input = document.querySelector('#player-input'),
+                        element = document.querySelector('#player-element');
+
+                    element.setAttribute('text', input.value);
+
+                    input.addEventListener('input', function(e) {
+                        element.setAttribute('text', input.value);
+                    });
+
+                    form.addEventListener('submit', function(e) {
+                        e.preventDefault();
+                        element.speak();
+                    });
+                });
+                </script>
+
+                <div class="example">
+                    <form id="player-form" class="pure-form">
+                        <fieldset>
+                            <input id="player-input" type="text" value="You have reached your destination">
+                            <button id="player-submit" class="pure-button pure-button-primary">Speak!</button>
+                        </fieldset>
+                    </form>
+                </div>
+
+                <pre><code>&lt;voice-player id="player-element" text=""&gt;&lt;/voice-player&gt;
+
+&lt;script&gt;
+var form = document.querySelector('#player-form'),
+    input = document.querySelector('#player-input'),
+    element = document.querySelector('#player-element');
+
+input.addEventListener('input', function(e) {
+    element.setAttribute('text', input.value);
+});
+
+form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    element.speak();
+});
+&lt;/script&gt;
+</code></pre>
+
+                <!-- Options -->
+                <h2 class="content-head content-head-ribbon">Options</h2>
+                <table class="pure-table pure-table-striped">
+                    <thead>
+                        <tr>
+                            <th>Attribute</th>
+                            <th>Options</th>
+                            <th>Default</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>autoplay</td>
+                            <td>boolean</td>
+                            <td>false</td>
+                            <td>Specifies if the audio should play when page loads.</td>
+                        </tr>
+                        <tr>
+                            <td>accent</td>
+                            <td>en-US, en-GB, es-ES, fr-FR, it-IT, de-DE, ja-JP, ko-KR, zh-CN</td>
+                            <td>en-US</td>
+                            <td>Specifies the language to be synthesized and spoken.</td>
+                        </tr>
+                        <tr>
+                            <td>text</td>
+                            <td>string</td>
+                            <td>You are awesome</td>
+                            <td>Specifies the text to be synthesized and spoken.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- Methods -->
+                <h2 class="content-head content-head-ribbon">Methods</h2>
+                <table class="pure-table pure-table-striped">
+                    <thead>
+                        <tr>
+                            <th>Method</th>
+                            <th>Parameters</th>
+                            <th>Returns</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>speak()</td>
+                            <td>None</td>
+                            <td>Nothing</td>
+                            <td>Triggers the voice audio to be played.</td>
+                        </tr>
+                        <tr>
+                            <td>cancel()</td>
+                            <td>None</td>
+                            <td>Nothing</td>
+                            <td>Triggers the voice audio to be canceled.</td>
+                        </tr>
+                        <tr>
+                            <td>pause()</td>
+                            <td>None</td>
+                            <td>Nothing</td>
+                            <td>Triggers the voice audio to be paused.</td>
+                        </tr>
+                        <tr>
+                            <td>resume()</td>
+                            <td>None</td>
+                            <td>Nothing</td>
+                            <td>Triggers the voice audio to be resumed.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- Events -->
+                <h2 class="content-head content-head-ribbon">Events</h2>
+                <table class="pure-table pure-table-striped">
+                    <thead>
+                        <tr>
+                            <th>Event</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>onstart</td>
+                            <td>Triggers when the voice begun to be spoken.</td>
+                        </tr>
+                        <tr>
+                            <td>onend</td>
+                            <td>Triggers when the voice completed to be spoken.</td>
+                        </tr>
+                        <tr>
+                            <td>onerror</td>
+                            <td>Triggers when the voice player detects an error.</td>
+                        </tr>
+                        <tr>
+                            <td>onpause</td>
+                            <td>Triggers when the voice player is resumed.</td>
+                        </tr>
+                        <tr>
+                            <td>onresume</td>
+                            <td>Triggers when the voice player is resumed.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Features -->
+        <div class="features content">
+            <h2 class="content-head is-center">Features</h2>
+
+            <div class="center section pure-g-r">
+                <div class="l-box pure-u-1-2">
+                    <h3 class="content-subhead">
+                        Voice recognition (speech to text)
+                    </h3>
+                    <p>
+                        Voice recognition is the translation of spoken words into text. This is achieved in the browser by using the <a href="https://dvcs.w3.org/hg/speech-api/raw-file/tip/speechapi.html#speechreco-section">SpeechRecognition interface</a> from the Web Speech API.
+                    </p>
+                </div>
+                <div class="l-box pure-u-1-2">
+                    <h3 class="content-subhead">
+                        Speech synthesis (text to speech)
+                    </h3>
+                    <p>
+                        Speech synthesis is the conversion of language text into speech. This is achieved in the browser by using then <a href="https://dvcs.w3.org/hg/speech-api/raw-file/tip/speechapi.html#tts-section">SpeechSynthesis interface</a> from the Web Speech API.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Voice Recognition -->
+        <div class="ribbon l-box-lrg pure-g">
+            <div class="section pure-u-1 pure-u-med-1-2 pure-u-lrg-3-5 center">
+                <h2 class="content-head content-head-ribbon">&lt;voice-recognition&gt;</h2>
+                <p>Provides you a simple DOM API to do voice recognition (speech to text).</p>
+
+                <!-- Demo #1 -->
+                <p>In the following demo, we trigger the voice recognition by using the <strong>start</strong> method when the user submits the form. Then, we add a listener to the <strong>result</strong> event to fetch the recognized content and put it into the textarea.</p>
+
+                <voice-recognition id="recognition-element"></voice-recognition>
+                <script>
+                window.addEventListener('polymer-ready', function(e) {
+                    var form = document.querySelector('#recognition-form'),
+                        input = document.querySelector('#recognition-input'),
+                        element = document.querySelector('#recognition-element');
+
+                    form.addEventListener('submit', function(e) {
+                        e.preventDefault();
+                        element.start();
+                    });
+
+                    element.addEventListener('result', function(e) {
+                        input.textContent = e.detail.result;
+                    });
+                });
+                </script>
+
+                <div class="example">
+                    <p>Click "start", authorize, and say something...</p>
+
+                    <form id="recognition-form" class="pure-form">
+                        <fieldset>
+                            <textarea id="recognition-input" readonly></textarea>
+                        </fieldset>
+                        <fieldset>
+                            <button id="recognition-submit" class="pure-button pure-button-primary">Start!</button>
+                        </fieldset>
+                    </form>
+                </div>
+
+                <pre><code>&lt;voice-recognition id="recognition-element"&gt;&lt;/voice-recognition&gt;
+
+&lt;script&gt;
+var form = document.querySelector('#recognition-form'),
+    input = document.querySelector('#recognition-input'),
+    element = document.querySelector('#recognition-element');
+
+form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    element.start();
+});
+
+element.addEventListener('result', function(e) {
+    input.textContent = e.detail.result;
+});
+&lt;/script&gt;
+</code></pre>
+
+                <!-- Options -->
+                <h2 class="content-head content-head-ribbon">Options</h2>
+                <table class="pure-table pure-table-striped">
+                    <thead>
+                        <tr>
+                            <th>Attribute</th>
+                            <th>Options</th>
+                            <th>Default</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>continuous</td>
+                            <td>boolean</td>
+                            <td>false</td>
+                            <td>Specifies if the recognition should continue when the user pauses while speaking.</td>
+                        </tr>
+                        <tr>
+                            <td>text</td>
+                            <td>string</td>
+                            <td></td>
+                            <td>Returns the recognized text.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- Methods -->
+                <h2 class="content-head content-head-ribbon">Methods</h2>
+                <table class="pure-table pure-table-striped">
+                    <thead>
+                        <tr>
+                            <th>Method</th>
+                            <th>Parameters</th>
+                            <th>Returns</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>start()</td>
+                            <td>None</td>
+                            <td>Nothing</td>
+                            <td>Starts the voice recognition.</td>
+                        </tr>
+                        <tr>
+                            <td>stop()</td>
+                            <td>None</td>
+                            <td>Nothing</td>
+                            <td>Requests to recognition service to stop listening to more audio.</td>
+                        </tr>
+                        <tr>
+                            <td>abort()</td>
+                            <td>None</td>
+                            <td>Nothing</td>
+                            <td>Requests to immediately stop listening and stop recognizing.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- Events -->
+                <h2 class="content-head content-head-ribbon">Events</h2>
+                <table class="pure-table pure-table-striped">
+                    <thead>
+                        <tr>
+                            <th>Event</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>onstart</td>
+                            <td>Triggers when the recognition begins.</td>
+                        </tr>
+                        <tr>
+                            <td>onerror</td>
+                            <td>Triggers when there's a recognition error.</td>
+                        </tr>
+                        <tr>
+                            <td>onend</td>
+                            <td>Triggers when the recognition ends.</td>
+                        </tr>
+                        <tr>
+                            <td>onresult</td>
+                            <td>Triggers when there's a recognition result.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Usage -->
+        <div class="content">
+            <h2 class="content-head is-center">Usage</h2>
+
+            <div class="section pure-g-r center">
+                <div class="pure-u-1">
+                    <h3 class="content-subhead">1. Import Web Components' polyfill</h3>
+                    <pre><code>&lt;script src="bower_components/platform/platform.js"&gt;&lt;/script&gt;</code></pre>
+
+                    <h3 class="content-subhead">2. Import Custom Element</h3>
+                    <pre><code>&lt;link rel="import" href="bower_components/voice-elements/dist/voice-player.html"&gt;
+&lt;link rel="import" href="bower_components/voice-elements/dist/voice-recognition.html"&gt;</code></pre>
+
+                    <h3 class="content-subhead">3. Start using it!</h3>
+                    <pre><code>&lt;voice-player&gt;&lt;/voice-player&gt;
+&lt;voice-recognition&gt;&lt;/voice-recognition&gt;</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer l-box is-center">
+            <p>
+                Made with <span class="love">♥</span> by <a href="http://zenorocha.com/">Zeno Rocha</a> under <a href="http://zenorocha.mit-license.org/">MIT license</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Demo Scripts -->
+    <script src="demo/support.js"></script>
+
+    <!-- Syntax Highlight -->
+    <link href="demo/highlight.github.css" rel="stylesheet">
+    <script src="demo/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <!-- Google Analytics -->
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-4114546-42', 'auto');
+        ga('send', 'pageview');
+    </script>
+</body>
+</html>

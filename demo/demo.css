@@ -1,0 +1,351 @@
+/* ==========================================================================
+   Global selectors
+   ========================================================================== */
+
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+body {
+    line-height: 1.7em;
+    color: #7f8c8d;
+    font-size: 14px;
+    font-family: 'Roboto Slab', serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #34495e;
+}
+
+pre {
+    display: block;
+    padding: 9.5px;
+    margin: 0 0 10px;
+    font-size: 14px;
+    line-height: 20px;
+    word-break: break-all;
+    word-wrap: break-word;
+    white-space: pre;
+    white-space: pre-wrap;
+    background-color: #f8f8f8;
+    border-radius: 4px;
+    font-family: Monaco, Consolas, "Lucida Console", monospace;
+}
+
+/* ==========================================================================
+   Layout styles
+   ========================================================================== */
+
+.l-box {
+    padding: 1em;
+}
+
+.l-box-lrg {
+    padding: 2em;
+}
+
+.section {
+    margin-bottom: 2em !important;
+}
+
+.is-center {
+    text-align: center;
+}
+
+
+/* ==========================================================================
+   Pure button
+   ========================================================================== */
+
+.pure-button {
+    background-color: #1f8dd6;
+    color: white;
+    padding: 0.5em 2em;
+    border-radius: 5px;
+}
+
+a.pure-button-primary {
+    background: white;
+    color: #1f8dd6;
+    border-radius: 5px;
+    font-size: 120%;
+}
+
+/* ==========================================================================
+   Browser Support
+   ========================================================================== */
+
+.brower-support {
+    width: 100%;
+    height: 60px;
+    background: white;
+    text-align: center;
+    position: fixed;
+    z-index: 2;
+    display: none;
+}
+.brower-support a {
+    color: #EA3556;
+    text-decoration: none;
+    border-bottom: 1px dotted #EA3556;
+}
+
+/* ==========================================================================
+   Splash Screen
+   ========================================================================== */
+
+.splash-container {
+    background: #EA3556;
+    z-index: 1;
+    overflow: hidden;
+    /* The following styles are required for the "scroll-over" effect */
+    width: 100%;
+    height: 88%;
+    top: 0;
+    left: 0;
+    position: fixed;
+}
+
+.splash {
+    /* absolute center .splash within .splash-container */
+    width: 350px;
+    height: 50%;
+    margin: auto;
+    position: absolute;
+    top: 70px; left: 0; bottom: 0; right: 0;
+    text-align: center;
+}
+
+/* This is the main heading that appears on the blue section */
+.splash-head {
+    font-size: 45px;
+    font-weight: bold;
+    color: white;
+    font-weight: 100;
+    border-radius: 5px;
+    line-height: 1em;
+    opacity: 1;
+    color: rgba(255, 255, 255, .4);
+    margin: 0;
+}
+
+.splash-first-line {
+    display: inline;
+}
+
+.splash-second-line {
+    display: inline-block;
+}
+
+.highlight {
+    color: rgba(255, 255, 255, 1);
+}
+
+/* This is the subheading that appears on the blue section */
+.splash-subhead {
+    color: white;
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    opacity: 0.8;
+    text-transform: uppercase;
+    padding: 1em 0;
+}
+
+.gh-btns {
+    margin-bottom: 0;
+}
+
+/* ==========================================================================
+   Content Area
+   ========================================================================== */
+
+.content-wrapper {
+    /* These styles are required for the "scroll-over" effect */
+    position: absolute;
+    top: 87%;
+    width: 100%;
+    min-height: 12%;
+    z-index: 2;
+    background: white;
+}
+
+.content {
+    padding: 1em;
+}
+
+/* This is the class used for the main content headers (<h2>) */
+.content-head {
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin: 2em 0 1em;
+    /*width: 960px;*/
+}
+
+/* This is a modifier class used when the content-head is inside a ribbon */
+.content-head-ribbon {
+    color: #06a0a5;
+    font-family: 'Roboto Slab', serif;
+}
+
+/* This is the class used for the content sub-headers (<h3>) */
+.content-subhead {
+    color: #1f8dd6;
+}
+
+/* This is the class used for the dark-background areas. */
+.ribbon {
+    background: #61D2D6; /*#61D2D6;*/
+}
+
+.ribbon p {
+    color: #fff;
+}
+
+.features a {
+    color: #1f8dd6;
+    text-decoration: none;
+    border-bottom: 1px dotted #1f8dd6;
+}
+
+/* Code example
+   ========================================================================== */
+
+#demo-input {
+    width: 50%;
+}
+
+.center {
+    max-width: 768px;
+    margin: 0 auto;
+    display: block;
+}
+
+.example {
+    position: relative;
+    margin: 15px 0;
+    padding: 39px 19px 14px;
+    background-color: #fff;
+    border-radius: 4px 4px 0 0;
+}
+
+.example p {
+    color: #666;
+}
+
+.example:after {
+    content: "Example";
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 2px 8px;
+    font-size: 12px;
+    font-weight: bold;
+    background-color: #f5f5f5;
+    color: #9da0a4;
+    border-radius: 4px 0 4px 0;
+}
+
+.example + pre {
+    margin-top: -20px;
+    padding-top: 15px;
+}
+
+/* Pure Table
+   ========================================================================== */
+
+.pure-table {
+    font-size: 12px;
+    background-color: #fff;
+    border-radius: 4px;
+    border-collapse: separate;
+    overflow: hidden;
+    border: 0;
+}
+
+.pure-table thead {
+    background: #06a0a5;
+    color: #fff;
+}
+
+.pure-table td, .pure-table th {
+    border: 0;
+}
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+
+.footer {
+    color: #fff;
+    background: #EA3556;
+}
+
+.footer a {
+    color: #fdacbb;
+    text-decoration: none;
+    border-bottom: 1px dotted #fdacbb;
+}
+
+/* Love animation
+   ========================================================================== */
+
+.love {
+    color: #fdacbb;
+    display: inline-block;
+    position: relative;
+    top: .2em;
+    font-size: 1.4em;
+    -webkit-transform: scale(.9);
+    -moz-transform: scale(.9);
+    transform: scale(.9);
+    -webkit-animation: love .5s infinite linear alternate-reverse;
+    -moz-animation: love .5s infinite linear alternate-reverse;
+    animation: love .5s infinite linear alternate-reverse;
+}
+
+@-webkit-keyframes love {
+    to {-webkit-transform: scale(1.2);}
+}
+
+@-moz-keyframes love {
+    to {-moz-transform: scale(1.2);}
+}
+@keyframes love {
+    to {transform: scale(1.2);}
+}
+
+/* ==========================================================================
+   Media Queries
+   ========================================================================== */
+
+/* Tablet (and up)
+   ========================================================================== */
+
+@media (min-width: 48em) {
+    body {
+        font-size: 16px;
+    }
+
+    .splash {
+        width: 400px;
+    }
+
+    .splash-head {
+        font-size: 70px;
+    }
+
+    .splash-first-line {
+        padding-right: 183px;
+    }
+
+    .splash-subhead {
+        font-size: 14px;
+    }
+
+    .pure-table {
+        font-size: 16px;
+    }
+}

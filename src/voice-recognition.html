@@ -1,0 +1,86 @@
+<!-- Import Polymer -->
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<!-- Define your custom element -->
+<polymer-element name="voice-recognition" attributes="continuous text">
+    <script>
+        Polymer('voice-recognition', {
+            /* -- Attributes ------------------------------------------------ */
+            continuous: true,
+            text: '',
+
+            /* -- Lifecycle ------------------------------------------------- */
+            created: function() {
+                var SpeechRecognition = window.SpeechRecognition ||
+                                        window.webkitSpeechRecognition ||
+                                        window.mozSpeechRecognition ||
+                                        window.msSpeechRecognition ||
+                                        window.oSpeechRecognition;
+
+                if (SpeechRecognition !== undefined) {
+                    this.recognition = new SpeechRecognition();
+                }
+                else {
+                    console.error('Your browser do not support the Web Speech API');
+                }
+            },
+            ready: function() {
+                this.recognition.continuous = this.continuous;
+                this.recognition.interimResults = false;
+
+                // Initialize event listeners
+                this.bindStart();
+                this.bindError();
+                this.bindEnd();
+                this.bindResult();
+            },
+
+            /* -- Methods --------------------------------------------------- */
+            start: function() {
+                this.recognition.start();
+            },
+            stop: function() {
+                this.recognition.stop();
+            },
+            abort: function() {
+                this.recognition.abort();
+            },
+
+            /* -- Events ---------------------------------------------------- */
+            bindStart: function() {
+                var that = this;
+
+                this.recognition.addEventListener('start', function(e) {
+                    that.fire('start', e);
+                });
+            },
+            bindError: function() {
+                var that = this;
+
+                this.recognition.addEventListener('error', function(e) {
+                    that.fire('error', e);
+                });
+            },
+            bindEnd: function() {
+                var that = this;
+
+                this.recognition.addEventListener('end', function(e) {
+                    that.fire('end', e);
+                });
+            },
+            bindResult: function() {
+                var that = this;
+
+                this.recognition.addEventListener('result', function(e) {
+                    for (var i = e.resultIndex; i < e.results.length; ++i) {
+                        that.text += e.results[i][0].transcript;
+                        e.result = that.text;
+                    }
+
+                    that.fire('result', e);
+                });
+            }
+        });
+    </script>
+
+</polymer-element>
