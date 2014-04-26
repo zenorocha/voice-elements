@@ -11,8 +11,14 @@
 
             /* -- Lifecycle ------------------------------------------------- */
             created: function() {
-                if ('webkitSpeechRecognition' in window) {
-                    this.recognition = new window.webkitSpeechRecognition();
+                var SpeechRecognition = window.SpeechRecognition ||
+                                        window.webkitSpeechRecognition ||
+                                        window.mozSpeechRecognition ||
+                                        window.msSpeechRecognition ||
+                                        window.oSpeechRecognition;
+
+                if (SpeechRecognition !== undefined) {
+                    this.recognition = new SpeechRecognition();
                 }
                 else {
                     console.error('Your browser do not support the Web Speech API');
