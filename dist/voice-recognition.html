@@ -29,9 +29,11 @@
                 this.recognition.interimResults = false;
 
                 // Initialize event listeners
-                this.bindStart();
-                this.bindError();
-                this.bindEnd();
+                [
+                    'start',
+                    'error',
+                    'end'
+                ].forEach(this.propagateEvent.bind(this));
                 this.bindResult();
             },
 
@@ -47,26 +49,8 @@
             },
 
             /* -- Events ---------------------------------------------------- */
-            bindStart: function() {
-                var that = this;
-
-                this.recognition.addEventListener('start', function(e) {
-                    that.fire('start', e);
-                });
-            },
-            bindError: function() {
-                var that = this;
-
-                this.recognition.addEventListener('error', function(e) {
-                    that.fire('error', e);
-                });
-            },
-            bindEnd: function() {
-                var that = this;
-
-                this.recognition.addEventListener('end', function(e) {
-                    that.fire('end', e);
-                });
+            propagateEvent: function (eventName) {
+                this.recognition.addEventListener(eventName, this.fire.bind(this, eventName));
             },
             bindResult: function() {
                 var that = this;
