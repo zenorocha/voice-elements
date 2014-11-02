@@ -77,7 +77,7 @@ Provides you a simple DOM API to do voice recognition (speech to text).
 
 Attribute    | Options        | Default           | Description
 ---          | ---         | ---               | ---
-`continuous` | *boolean*   | `false`           | Specifies if the recognition should continue when the user pauses while speaking.
+`continuous` | *boolean*   | `true`           | Specifies if the recognition should continue when the user pauses while speaking.
 `text`       | *string*    |                   | Returns the recognized text.
 
 ### Methods
