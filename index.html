@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="demo/demo.css">
 
     <!-- Importing Web Component's Polyfill -->
-    <script src="bower_components/platform/platform.js"></script>
+    <script src="bower_components/webcomponentsjs/webcomponents.min.js"></script>
 
     <!-- Importing Custom Elements -->
     <link rel="import" href="src/voice-player.html">
@@ -31,7 +31,7 @@
 
     <!-- Support Warning -->
     <div class="brower-support">
-        <p>Sorry, your browser <a href="http://caniuse.com/#feat=web-speech">do not support</a> the Web Speech API :(</p>
+        <p>Sorry, your browser <a href="http://caniuse.com/#feat=web-speech">does not support</a> the Web Speech API :(</p>
     </div>
 
     <!-- Splash Screen -->
@@ -383,7 +383,7 @@ element.addEventListener('result', function(e) {
                         <tr>
                             <td>continuous</td>
                             <td>boolean</td>
-                            <td>false</td>
+                            <td>true</td>
                             <td>Specifies if the recognition should continue when the user pauses while speaking.</td>
                         </tr>
                         <tr>
