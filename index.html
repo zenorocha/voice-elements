@@ -390,7 +390,19 @@ element.addEventListener('result', function(e) {
                             <td>text</td>
                             <td>string</td>
                             <td></td>
-                            <td>Returns the recognized text.</td>
+                            <td>Returns the final recognized text.</td>
+                        </tr>
+                        <tr>
+                            <td>interim</td>
+                            <td>string</td>
+                            <td></td>
+                            <td>Returns the interim recognized text.</td>
+                        </tr>
+                        <tr>
+                            <td>last</td>
+                            <td>string</td>
+                            <td></td>
+                            <td>Returns the last final recognized text.</td>
                         </tr>
                     </tbody>
                 </table>
@@ -454,7 +466,7 @@ element.addEventListener('result', function(e) {
                         </tr>
                         <tr>
                             <td>onresult</td>
-                            <td>Triggers when there's a recognition result.</td>
+                            <td>Triggers when there's a finalized recognition result.</td>
                         </tr>
                     </tbody>
                 </table>
