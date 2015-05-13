@@ -21,7 +21,7 @@ Or [download as ZIP](https://github.com/zenorocha/voice-elements/archive/gh-page
 1. Import Web Components' polyfill:
 
     ```html
-    <script src="bower_components/webcomponentsjs/webcomponents.min.js"></script>
+    <script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
     ```
 
 2. Import Custom Element:
