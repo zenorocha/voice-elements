@@ -5,9 +5,20 @@
             is: 'voice-player',
 
             /* -- Attributes ------------------------------------------------ */
-            autoplay: false,
-            accent: 'en-US',
-            text: 'You are awesome',
+            properties: {
+                autoplay: {
+                    type: Boolean,
+                    value: false
+                },
+                accent: {
+                    type: String,
+                    value: 'en-US'
+                },
+                text: {
+                    type: String,
+                    value: 'You are awesome'
+                }
+            },
 
             /* -- Lifecycle ------------------------------------------------- */
             created: function() {

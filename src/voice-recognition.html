@@ -5,8 +5,16 @@
             is: 'voice-recognition',
 
             /* -- Attributes ------------------------------------------------ */
-            continuous: true,
-            text: '',
+            properties: {
+                continuous: {
+                    type: Boolean,
+                    value: true
+                },
+                text: {
+                    type: String,
+                    value: ''
+                }
+            },
 
             /* -- Lifecycle ------------------------------------------------- */
             created: function() {
