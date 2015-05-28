@@ -7,7 +7,7 @@
  * Code distributed by Google as part of the polymer project is also
  * subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
  */
-// @version 0.5.1
+// @version 0.7.2
 if (typeof WeakMap === "undefined") {
   (function() {
     var defineProperty = Object.defineProperty;
@@ -47,7 +47,7 @@ if (typeof WeakMap === "undefined") {
 (function(global) {
   var registrationsTable = new WeakMap();
   var setImmediate;
-  if (/Trident/.test(navigator.userAgent)) {
+  if (/Trident|Edge/.test(navigator.userAgent)) {
     setImmediate = setTimeout;
   } else if (window.setImmediate) {
     setImmediate = window.setImmediate;
@@ -315,7 +315,6 @@ if (typeof WeakMap === "undefined") {
         this.addTransientObserver(e.target);
 
        case "DOMNodeInserted":
-        var target = e.relatedNode;
         var changedNode = e.target;
         var addedNodes, removedNodes;
         if (e.type === "DOMNodeInserted") {
@@ -327,12 +326,12 @@ if (typeof WeakMap === "undefined") {
         }
         var previousSibling = changedNode.previousSibling;
         var nextSibling = changedNode.nextSibling;
-        var record = getRecord("childList", target);
+        var record = getRecord("childList", e.target.parentNode);
         record.addedNodes = addedNodes;
         record.removedNodes = removedNodes;
         record.previousSibling = previousSibling;
         record.nextSibling = nextSibling;
-        forEachAncestorAndObserverEnqueueRecord(target, function(options) {
+        forEachAncestorAndObserverEnqueueRecord(e.relatedNode, function(options) {
           if (!options.childList) return;
           return record;
         });
@@ -365,7 +364,7 @@ window.HTMLImports = window.HTMLImports || {
   };
   Object.defineProperty(document, "_currentScript", currentScriptDescriptor);
   Object.defineProperty(rootDocument, "_currentScript", currentScriptDescriptor);
-  var isIE = /Trident/.test(navigator.userAgent);
+  var isIE = /Trident|Edge/.test(navigator.userAgent);
   function whenReady(callback, doc) {
     doc = doc || rootDocument;
     whenDocumentReady(function() {
@@ -395,26 +394,35 @@ window.HTMLImports = window.HTMLImports || {
   }
   function watchImportsLoad(callback, doc) {
     var imports = doc.querySelectorAll("link[rel=import]");
-    var loaded = 0, l = imports.length;
-    function checkDone(d) {
-      if (loaded == l && callback) {
-        callback();
+    var parsedCount = 0, importCount = imports.length, newImports = [], errorImports = [];
+    function checkDone() {
+      if (parsedCount == importCount && callback) {
+        callback({
+          allImports: imports,
+          loadedImports: newImports,
+          errorImports: errorImports
+        });
       }
     }
     function loadedImport(e) {
       markTargetLoaded(e);
-      loaded++;
+      newImports.push(this);
+      parsedCount++;
       checkDone();
     }
-    if (l) {
-      for (var i = 0, imp; i < l && (imp = imports[i]); i++) {
+    function errorLoadingImport(e) {
+      errorImports.push(this);
+      parsedCount++;
+      checkDone();
+    }
+    if (importCount) {
+      for (var i = 0, imp; i < importCount && (imp = imports[i]); i++) {
         if (isImportLoaded(imp)) {
-          loadedImport.call(imp, {
-            target: imp
-          });
+          parsedCount++;
+          checkDone();
         } else {
           imp.addEventListener("load", loadedImport);
-          imp.addEventListener("error", loadedImport);
+          imp.addEventListener("error", errorLoadingImport);
         }
       }
     } else {
@@ -464,12 +472,12 @@ window.HTMLImports = window.HTMLImports || {
       }
     })();
   }
-  whenReady(function() {
+  whenReady(function(detail) {
     HTMLImports.ready = true;
     HTMLImports.readyTime = new Date().getTime();
-    rootDocument.dispatchEvent(new CustomEvent("HTMLImportsLoaded", {
-      bubbles: true
-    }));
+    var evt = rootDocument.createEvent("CustomEvent");
+    evt.initCustomEvent("HTMLImportsLoaded", true, true, detail);
+    rootDocument.dispatchEvent(evt);
   });
   scope.IMPORT_LINK_TYPE = IMPORT_LINK_TYPE;
   scope.useNative = useNative;
@@ -496,20 +504,23 @@ HTMLImports.addModule(function(scope) {
   var CSS_URL_REGEXP = /(url\()([^)]*)(\))/g;
   var CSS_IMPORT_REGEXP = /(@import[\s]+(?!url\())([^;]*)(;)/g;
   var path = {
-    resolveUrlsInStyle: function(style) {
+    resolveUrlsInStyle: function(style, linkUrl) {
       var doc = style.ownerDocument;
       var resolver = doc.createElement("a");
-      style.textContent = this.resolveUrlsInCssText(style.textContent, resolver);
+      style.textContent = this.resolveUrlsInCssText(style.textContent, linkUrl, resolver);
       return style;
     },
-    resolveUrlsInCssText: function(cssText, urlObj) {
-      var r = this.replaceUrls(cssText, urlObj, CSS_URL_REGEXP);
-      r = this.replaceUrls(r, urlObj, CSS_IMPORT_REGEXP);
+    resolveUrlsInCssText: function(cssText, linkUrl, urlObj) {
+      var r = this.replaceUrls(cssText, urlObj, linkUrl, CSS_URL_REGEXP);
+      r = this.replaceUrls(r, urlObj, linkUrl, CSS_IMPORT_REGEXP);
       return r;
     },
-    replaceUrls: function(text, urlObj, regexp) {
+    replaceUrls: function(text, urlObj, linkUrl, regexp) {
       return text.replace(regexp, function(m, pre, url, post) {
         var urlPath = url.replace(/["']/g, "");
+        if (linkUrl) {
+          urlPath = new URL(urlPath, linkUrl).href;
+        }
         urlObj.href = urlPath;
         urlPath = urlObj.href;
         return pre + "'" + urlPath + "'" + post;
@@ -520,7 +531,7 @@ HTMLImports.addModule(function(scope) {
 });
 
 HTMLImports.addModule(function(scope) {
-  xhr = {
+  var xhr = {
     async: true,
     ok: function(request) {
       return request.status >= 200 && request.status < 300 || request.status === 304 || request.status === 0;
@@ -597,7 +608,13 @@ HTMLImports.addModule(function(scope) {
     },
     fetch: function(url, elt) {
       flags.load && console.log("fetch", url, elt);
-      if (url.match(/^data:/)) {
+      if (!url) {
+        setTimeout(function() {
+          this.receive(url, elt, {
+            error: "href must be specified"
+          }, null);
+        }.bind(this), 0);
+      } else if (url.match(/^data:/)) {
         var pieces = url.split(",");
         var header = pieces[0];
         var body = pieces[1];
@@ -680,7 +697,7 @@ HTMLImports.addModule(function(scope) {
   var IMPORT_SELECTOR = "link[rel=" + IMPORT_LINK_TYPE + "]";
   var importParser = {
     documentSelectors: IMPORT_SELECTOR,
-    importsSelectors: [ IMPORT_SELECTOR, "link[rel=stylesheet]", "style", "script:not([type])", 'script[type="text/javascript"]' ].join(","),
+    importsSelectors: [ IMPORT_SELECTOR, "link[rel=stylesheet]", "style", "script:not([type])", 'script[type="application/javascript"]', 'script[type="text/javascript"]' ].join(","),
     map: {
       link: "parseLink",
       script: "parseScript",
@@ -771,6 +788,7 @@ HTMLImports.addModule(function(scope) {
     parseStyle: function(elt) {
       var src = elt;
       elt = cloneStyle(elt);
+      src.__appliedElement = elt;
       elt.__importElement = src;
       this.parseGeneric(elt);
     },
@@ -787,12 +805,7 @@ HTMLImports.addModule(function(scope) {
     },
     addElementToDocument: function(elt) {
       var port = this.rootImportForElement(elt.__importElement || elt);
-      var l = port.__insertedElements = port.__insertedElements || 0;
-      var refNode = port.nextElementSibling;
-      for (var i = 0; i < l; i++) {
-        refNode = refNode && refNode.nextElementSibling;
-      }
-      port.parentNode.insertBefore(elt, refNode);
+      port.parentNode.insertBefore(elt, port);
     },
     trackElement: function(elt, callback) {
       var self = this;
@@ -820,9 +833,11 @@ HTMLImports.addModule(function(scope) {
           }
         }
         if (fakeLoad) {
-          elt.dispatchEvent(new CustomEvent("load", {
-            bubbles: false
-          }));
+          setTimeout(function() {
+            elt.dispatchEvent(new CustomEvent("load", {
+              bubbles: false
+            }));
+          });
         }
       }
     },
@@ -966,13 +981,18 @@ HTMLImports.addModule(function(scope) {
   function isLinkRel(elt, rel) {
     return elt.localName === "link" && elt.getAttribute("rel") === rel;
   }
+  function hasBaseURIAccessor(doc) {
+    return !!Object.getOwnPropertyDescriptor(doc, "baseURI");
+  }
   function makeDocument(resource, url) {
     var doc = document.implementation.createHTMLDocument(IMPORT_LINK_TYPE);
     doc._URL = url;
     var base = doc.createElement("base");
     base.setAttribute("href", url);
-    if (!doc.baseURI) {
-      doc.baseURI = url;
+    if (!doc.baseURI && !hasBaseURIAccessor(doc)) {
+      Object.defineProperty(doc, "baseURI", {
+        value: url
+      });
     }
     var meta = doc.createElement("meta");
     meta.setAttribute("charset", "utf-8");
@@ -1004,7 +1024,7 @@ HTMLImports.addModule(function(scope) {
   var importer = scope.importer;
   var dynamic = {
     added: function(nodes) {
-      var owner, parsed;
+      var owner, parsed, loading;
       for (var i = 0, l = nodes.length, n; i < l && (n = nodes[i]); i++) {
         if (!owner) {
           owner = n.ownerDocument;
@@ -1031,16 +1051,19 @@ HTMLImports.addModule(function(scope) {
 });
 
 (function(scope) {
-  initializeModules = scope.initializeModules;
+  var initializeModules = scope.initializeModules;
+  var isIE = scope.isIE;
   if (scope.useNative) {
     return;
   }
-  if (typeof window.CustomEvent !== "function") {
-    window.CustomEvent = function(inType, dictionary) {
-      var e = document.createEvent("HTMLEvents");
-      e.initEvent(inType, dictionary.bubbles === false ? false : true, dictionary.cancelable === false ? false : true, dictionary.detail);
+  if (isIE && typeof window.CustomEvent !== "function") {
+    window.CustomEvent = function(inType, params) {
+      params = params || {};
+      var e = document.createEvent("CustomEvent");
+      e.initCustomEvent(inType, Boolean(params.bubbles), Boolean(params.cancelable), params.detail);
       return e;
     };
+    window.CustomEvent.prototype = window.Event.prototype;
   }
   initializeModules();
   var rootDocument = scope.rootDocument;

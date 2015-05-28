@@ -7,7 +7,7 @@
  * Code distributed by Google as part of the polymer project is also
  * subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
  */
-// @version 0.5.1
+// @version 0.7.2
 if (typeof WeakMap === "undefined") {
   (function() {
     var defineProperty = Object.defineProperty;
@@ -47,7 +47,7 @@ if (typeof WeakMap === "undefined") {
 (function(global) {
   var registrationsTable = new WeakMap();
   var setImmediate;
-  if (/Trident/.test(navigator.userAgent)) {
+  if (/Trident|Edge/.test(navigator.userAgent)) {
     setImmediate = setTimeout;
   } else if (window.setImmediate) {
     setImmediate = window.setImmediate;
@@ -315,7 +315,6 @@ if (typeof WeakMap === "undefined") {
         this.addTransientObserver(e.target);
 
        case "DOMNodeInserted":
-        var target = e.relatedNode;
         var changedNode = e.target;
         var addedNodes, removedNodes;
         if (e.type === "DOMNodeInserted") {
@@ -327,12 +326,12 @@ if (typeof WeakMap === "undefined") {
         }
         var previousSibling = changedNode.previousSibling;
         var nextSibling = changedNode.nextSibling;
-        var record = getRecord("childList", target);
+        var record = getRecord("childList", e.target.parentNode);
         record.addedNodes = addedNodes;
         record.removedNodes = removedNodes;
         record.previousSibling = previousSibling;
         record.nextSibling = nextSibling;
-        forEachAncestorAndObserverEnqueueRecord(target, function(options) {
+        forEachAncestorAndObserverEnqueueRecord(e.relatedNode, function(options) {
           if (!options.childList) return;
           return record;
         });
@@ -399,13 +398,10 @@ CustomElements.addModule(function(scope) {
       root = root.olderShadowRoot;
     }
   }
-  var processingDocuments;
   function forDocumentTree(doc, cb) {
-    processingDocuments = [];
-    _forDocumentTree(doc, cb);
-    processingDocuments = null;
+    _forDocumentTree(doc, cb, []);
   }
-  function _forDocumentTree(doc, cb) {
+  function _forDocumentTree(doc, cb, processingDocuments) {
     doc = wrap(doc);
     if (processingDocuments.indexOf(doc) >= 0) {
       return;
@@ -414,7 +410,7 @@ CustomElements.addModule(function(scope) {
     var imports = doc.querySelectorAll("link[rel=" + IMPORT_LINK_TYPE + "]");
     for (var i = 0, l = imports.length, n; i < l && (n = imports[i]); i++) {
       if (n.import) {
-        _forDocumentTree(n.import, cb);
+        _forDocumentTree(n.import, cb, processingDocuments);
       }
     }
     cb(doc);
@@ -521,7 +517,7 @@ CustomElements.addModule(function(scope) {
       if (p == doc) {
         return true;
       }
-      p = p.parentNode || p.host;
+      p = p.parentNode || p.nodeType === Node.DOCUMENT_FRAGMENT_NODE && p.host;
     }
   }
   function watchShadow(node) {
@@ -604,11 +600,13 @@ CustomElements.addModule(function(scope) {
     forDocumentTree(doc, upgradeDocument);
   }
   var originalCreateShadowRoot = Element.prototype.createShadowRoot;
-  Element.prototype.createShadowRoot = function() {
-    var root = originalCreateShadowRoot.call(this);
-    CustomElements.watchShadow(this);
-    return root;
-  };
+  if (originalCreateShadowRoot) {
+    Element.prototype.createShadowRoot = function() {
+      var root = originalCreateShadowRoot.call(this);
+      CustomElements.watchShadow(this);
+      return root;
+    };
+  }
   scope.watchShadow = watchShadow;
   scope.upgradeDocumentTree = upgradeDocumentTree;
   scope.upgradeSubtree = addedSubtree;
@@ -678,8 +676,9 @@ CustomElements.addModule(function(scope) {
 });
 
 CustomElements.addModule(function(scope) {
+  var isIE11OrOlder = scope.isIE11OrOlder;
   var upgradeDocumentTree = scope.upgradeDocumentTree;
-  var upgrade = scope.upgrade;
+  var upgradeAll = scope.upgradeAll;
   var upgradeWithDefinition = scope.upgradeWithDefinition;
   var implementPrototype = scope.implementPrototype;
   var useNative = scope.useNative;
@@ -808,6 +807,12 @@ CustomElements.addModule(function(scope) {
     }
   }
   function createElement(tag, typeExtension) {
+    if (tag) {
+      tag = tag.toLowerCase();
+    }
+    if (typeExtension) {
+      typeExtension = typeExtension.toLowerCase();
+    }
     var definition = getRegisteredDefinition(typeExtension || tag);
     if (definition) {
       if (tag == definition.tag && typeExtension == definition.is) {
@@ -829,14 +834,8 @@ CustomElements.addModule(function(scope) {
     }
     return element;
   }
-  function cloneNode(deep) {
-    var n = domCloneNode.call(this, deep);
-    upgrade(n);
-    return n;
-  }
   var domCreateElement = document.createElement.bind(document);
   var domCreateElementNS = document.createElementNS.bind(document);
-  var domCloneNode = Node.prototype.cloneNode;
   var isInstance;
   if (!Object.__proto__ && !useNative) {
     isInstance = function(obj, ctor) {
@@ -854,10 +853,34 @@ CustomElements.addModule(function(scope) {
       return obj instanceof base;
     };
   }
+  function wrapDomMethodToForceUpgrade(obj, methodName) {
+    var orig = obj[methodName];
+    obj[methodName] = function() {
+      var n = orig.apply(this, arguments);
+      upgradeAll(n);
+      return n;
+    };
+  }
+  wrapDomMethodToForceUpgrade(Node.prototype, "cloneNode");
+  wrapDomMethodToForceUpgrade(document, "importNode");
+  if (isIE11OrOlder) {
+    (function() {
+      var importNode = document.importNode;
+      document.importNode = function() {
+        var n = importNode.apply(document, arguments);
+        if (n.nodeType == n.DOCUMENT_FRAGMENT_NODE) {
+          var f = document.createDocumentFragment();
+          f.appendChild(n);
+          return f;
+        } else {
+          return n;
+        }
+      };
+    })();
+  }
   document.registerElement = register;
   document.createElement = createElement;
   document.createElementNS = createElementNS;
-  Node.prototype.cloneNode = cloneNode;
   scope.registry = registry;
   scope.instanceof = isInstance;
   scope.reservedTagList = reservedTagList;
@@ -868,6 +891,7 @@ CustomElements.addModule(function(scope) {
 (function(scope) {
   var useNative = scope.useNative;
   var initializeModules = scope.initializeModules;
+  var isIE11OrOlder = /Trident/.test(navigator.userAgent);
   if (useNative) {
     var nop = function() {};
     scope.watchShadow = nop;
@@ -911,7 +935,7 @@ CustomElements.addModule(function(scope) {
       }));
     });
   }
-  if (typeof window.CustomEvent !== "function") {
+  if (isIE11OrOlder && typeof window.CustomEvent !== "function") {
     window.CustomEvent = function(inType, params) {
       params = params || {};
       var e = document.createEvent("CustomEvent");
@@ -928,4 +952,5 @@ CustomElements.addModule(function(scope) {
     var loadEvent = window.HTMLImports && !HTMLImports.ready ? "HTMLImportsLoaded" : "DOMContentLoaded";
     window.addEventListener(loadEvent, bootstrap);
   }
+  scope.isIE11OrOlder = isIE11OrOlder;
 })(window.CustomElements);

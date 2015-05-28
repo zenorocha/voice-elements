@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="demo/demo.css">
 
     <!-- Importing Web Component's Polyfill -->
-    <script src="bower_components/webcomponentsjs/webcomponents.min.js"></script>
+    <script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
 
     <!-- Importing Custom Elements -->
     <link rel="import" href="src/voice-player.html">
@@ -94,7 +94,7 @@
 
                 <voice-player id="mi-elemento" accent="es-ES" text="Me gusta la gasolina (Dame más gasolina!)"></voice-player>
                 <script>
-                window.addEventListener('polymer-ready', function(e) {
+                window.addEventListener('WebComponentsReady', function(e) {
                     var form = document.querySelector('#mi-form'),
                         element = document.querySelector('#mi-elemento');
 
@@ -130,7 +130,7 @@ form.addEventListener('submit', function(e) {
 
                 <voice-player id="player-element" text=""></voice-player>
                 <script>
-                window.addEventListener('polymer-ready', function(e) {
+                window.addEventListener('WebComponentsReady', function(e) {
                     var form = document.querySelector('#player-form'),
                         input = document.querySelector('#player-input'),
                         element = document.querySelector('#player-element');
@@ -320,7 +320,7 @@ form.addEventListener('submit', function(e) {
 
                 <voice-recognition id="recognition-element"></voice-recognition>
                 <script>
-                window.addEventListener('polymer-ready', function(e) {
+                window.addEventListener('WebComponentsReady', function(e) {
                     var form = document.querySelector('#recognition-form'),
                         input = document.querySelector('#recognition-input'),
                         element = document.querySelector('#recognition-element');
@@ -468,7 +468,7 @@ element.addEventListener('result', function(e) {
             <div class="section pure-g-r center">
                 <div class="pure-u-1">
                     <h3 class="content-subhead">1. Import Web Components' polyfill</h3>
-                    <pre><code>&lt;script src="bower_components/platform/platform.js"&gt;&lt;/script&gt;</code></pre>
+                    <pre><code>&lt;script src="bower_components/webcomponentsjs/webcomponents-lite.min.js"&gt;&lt;/script&gt;</code></pre>
 
                     <h3 class="content-subhead">2. Import Custom Element</h3>
                     <pre><code>&lt;link rel="import" href="bower_components/voice-elements/dist/voice-player.html"&gt;
