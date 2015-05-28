@@ -1,13 +1,20 @@
-<!-- Import Polymer -->
 <link rel="import" href="../../polymer/polymer.html">
 
-<!-- Define your custom element -->
-<polymer-element name="voice-recognition" attributes="continuous text">
     <script>
-        Polymer('voice-recognition', {
+        Polymer({
+            is: 'voice-recognition',
+
             /* -- Attributes ------------------------------------------------ */
-            continuous: true,
-            text: '',
+            properties: {
+                continuous: {
+                    type: Boolean,
+                    value: true
+                },
+                text: {
+                    type: String,
+                    value: ''
+                }
+            },
 
             /* -- Lifecycle ------------------------------------------------- */
             created: function() {
@@ -29,30 +36,21 @@
                 this.recognition.interimResults = false;
 
                 // Initialize event listeners
-                [
-                    'start',
-                    'error',
-                    'end'
-                ].forEach(this.propagateEvent.bind(this));
-                this.bindResult();
+                var events = ['start', 'end', 'error'];
+                events.forEach(this._propagateEvent.bind(this));
+
+                this._bindResult();
             },
 
-            /* -- Methods --------------------------------------------------- */
-            start: function() {
-                this.recognition.start();
-            },
-            stop: function() {
-                this.recognition.stop();
-            },
-            abort: function() {
-                this.recognition.abort();
-            },
+            /* -- Private Methods ------------------------------------------- */
+            _propagateEvent: function (eventName) {
+                var that = this;
 
-            /* -- Events ---------------------------------------------------- */
-            propagateEvent: function (eventName) {
-                this.recognition.addEventListener(eventName, this.fire.bind(this, eventName));
+                this.recognition.addEventListener(eventName, function(e) {
+                    that.fire(eventName, e);
+                });
             },
-            bindResult: function() {
+            _bindResult: function() {
                 var that = this;
 
                 this.recognition.addEventListener('result', function(e) {
@@ -63,8 +61,17 @@
 
                     that.fire('result', e);
                 });
+            },
+
+            /* -- Public Methods -------------------------------------------- */
+            start: function() {
+                this.recognition.start();
+            },
+            stop: function() {
+                this.recognition.stop();
+            },
+            abort: function() {
+                this.recognition.abort();
             }
         });
     </script>
-
-</polymer-element>

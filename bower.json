@@ -1,6 +1,6 @@
 {
     "name": "voice-elements",
-    "version": "0.2.0",
+    "version": "1.0.0",
     "description": "Web Speech API wrapper that allows you to do voice recognition (speech to text) and speech synthesis (text to speech) using Polymer.",
     "authors": [
         "Zeno Rocha <hi@zenorocha.com>"
@@ -23,6 +23,6 @@
         "bower_components"
     ],
     "dependencies": {
-        "polymer": "Polymer/polymer#^0.9.0"
+        "polymer": "Polymer/polymer#^1.0.0"
     }
 }

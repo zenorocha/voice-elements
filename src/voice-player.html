@@ -12,11 +12,15 @@
                 },
                 accent: {
                     type: String,
-                    value: 'en-US'
+                    value: 'en-US',
+                    observer: '_accentChanged',
+                    notify: true
                 },
                 text: {
                     type: String,
-                    value: 'You are awesome'
+                    value: 'You are awesome',
+                    observer: '_textChanged',
+                    notify: true
                 }
             },
 
@@ -30,32 +34,35 @@
                 }
             },
             ready: function() {
-
                 // Initialize attributes
-                this.textChanged();
-                this.accentChanged();
+                this._textChanged();
+                this._accentChanged();
 
                 // Initialize event listeners
-                [
-                    'start',
-                    'end',
-                    'error',
-                    'pause',
-                    'resume'
-                ].forEach(this.propagateEvent.bind(this));
+                var events = ['start', 'end', 'error', 'pause', 'resume'];
+                events.forEach(this._propagateEvent.bind(this));
 
                 if (this.autoplay) {
                     this.speak();
                 }
             },
-            accentChanged: function() {
+
+            /* -- Private Methods ------------------------------------------- */
+            _accentChanged: function() {
                 this.speech.lang = this.accent;
             },
-            textChanged: function() {
+            _textChanged: function() {
                 this.speech.text = this.text;
             },
+            _propagateEvent: function (eventName) {
+                var that = this;
 
-            /* -- Methods --------------------------------------------------- */
+                this.speech.addEventListener(eventName, function(e) {
+                    that.fire(eventName, e);
+                });
+            },
+
+            /* -- Public Methods -------------------------------------------- */
             speak: function() {
                 window.speechSynthesis.speak(this.speech);
             },
@@ -67,11 +74,6 @@
             },
             resume: function() {
                 window.speechSynthesis.resume();
-            },
-
-            /* -- Events ---------------------------------------------------- */
-            propagateEvent: function (eventName) {
-                this.speech.addEventListener(eventName, this.fire.bind(this, eventName));
             }
         });
     </script>
