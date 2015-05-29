@@ -1,79 +1,79 @@
 <link rel="import" href="../../polymer/polymer.html">
 
-    <script>
-        Polymer({
-            is: 'voice-player',
+<script>
+Polymer({
+    is: 'voice-player',
 
-            /* -- Attributes ------------------------------------------------ */
-            properties: {
-                autoplay: {
-                    type: Boolean,
-                    value: false
-                },
-                accent: {
-                    type: String,
-                    value: 'en-US',
-                    observer: '_accentChanged',
-                    notify: true
-                },
-                text: {
-                    type: String,
-                    value: 'You are awesome',
-                    observer: '_textChanged',
-                    notify: true
-                }
-            },
+    /* -- Attributes ------------------------------------------------ */
+    properties: {
+        autoplay: {
+            type: Boolean,
+            value: false
+        },
+        accent: {
+            type: String,
+            value: 'en-US',
+            observer: '_accentChanged',
+            notify: true
+        },
+        text: {
+            type: String,
+            value: 'You are awesome',
+            observer: '_textChanged',
+            notify: true
+        }
+    },
 
-            /* -- Lifecycle ------------------------------------------------- */
-            created: function() {
-                if ('speechSynthesis' in window) {
-                    this.speech = new SpeechSynthesisUtterance();
-                }
-                else {
-                    console.error('Your browser does not support the Web Speech API');
-                }
-            },
-            ready: function() {
-                // Initialize attributes
-                this._textChanged();
-                this._accentChanged();
+    /* -- Lifecycle ------------------------------------------------- */
+    created: function() {
+        if ('speechSynthesis' in window) {
+            this.speech = new SpeechSynthesisUtterance();
+        }
+        else {
+            console.error('Your browser does not support the Web Speech API');
+        }
+    },
+    ready: function() {
+        // Initialize attributes
+        this._textChanged();
+        this._accentChanged();
 
-                // Initialize event listeners
-                var events = ['start', 'end', 'error', 'pause', 'resume'];
-                events.forEach(this._propagateEvent.bind(this));
+        // Initialize event listeners
+        var events = ['start', 'end', 'error', 'pause', 'resume'];
+        events.forEach(this._propagateEvent.bind(this));
 
-                if (this.autoplay) {
-                    this.speak();
-                }
-            },
+        if (this.autoplay) {
+            this.speak();
+        }
+    },
 
-            /* -- Private Methods ------------------------------------------- */
-            _accentChanged: function() {
-                this.speech.lang = this.accent;
-            },
-            _textChanged: function() {
-                this.speech.text = this.text;
-            },
-            _propagateEvent: function (eventName) {
-                var that = this;
+    /* -- Private Methods ------------------------------------------- */
+    _accentChanged: function() {
+        this.speech.lang = this.accent;
+    },
+    _textChanged: function() {
+        this.speech.text = this.text;
+    },
+    _propagateEvent: function (eventName) {
+        var that = this;
 
-                this.speech.addEventListener(eventName, function(e) {
-                    that.fire(eventName, e);
-                });
-            },
-
-            /* -- Public Methods -------------------------------------------- */
-            speak: function() {
-                window.speechSynthesis.speak(this.speech);
-            },
-            cancel: function() {
-                window.speechSynthesis.cancel();
-            },
-            pause: function() {
-                window.speechSynthesis.pause();
-            },
-            resume: function() {
-                window.speechSynthesis.resume();
-            }
+        this.speech.addEventListener(eventName, function(e) {
+            that.fire(eventName, e);
         });
-    </script>
+    },
+
+    /* -- Public Methods -------------------------------------------- */
+    speak: function() {
+        window.speechSynthesis.speak(this.speech);
+    },
+    cancel: function() {
+        window.speechSynthesis.cancel();
+    },
+    pause: function() {
+        window.speechSynthesis.pause();
+    },
+    resume: function() {
+        window.speechSynthesis.resume();
+    }
+});
+</script>
