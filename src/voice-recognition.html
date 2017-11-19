@@ -64,7 +64,7 @@ Polymer({
 
         this.recognition.addEventListener('result', function(e) {
             for (var i = e.resultIndex; i < e.results.length; ++i) {
-                that.text += e.results[i][0].transcript;
+                that.text = e.results[i][0].transcript;
                 e.result = that.text;
             }
 

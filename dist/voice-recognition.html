@@ -10,6 +10,12 @@ Polymer({
             type: Boolean,
             value: true
         },
+        accent: {
+            type: String,
+            value: 'en-US',
+            observer: '_accentChanged',
+            notify: true
+        },
         text: {
             type: String,
             value: ''
@@ -43,6 +49,9 @@ Polymer({
     },
 
     /* -- Private Methods ------------------------------------------- */
+    _accentChanged: function() {
+        this.recognition.lang = this.accent;
+    },
     _propagateEvent: function (eventName) {
         var that = this;
 
@@ -55,7 +64,7 @@ Polymer({
 
         this.recognition.addEventListener('result', function(e) {
             for (var i = e.resultIndex; i < e.results.length; ++i) {
-                that.text += e.results[i][0].transcript;
+                that.text = e.results[i][0].transcript;
                 e.result = that.text;
             }
 
