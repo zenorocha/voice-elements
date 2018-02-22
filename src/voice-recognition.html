@@ -37,7 +37,11 @@
       }
     },
 
-    ready: function() {      
+    ready: function() {
+      if (!this.recognition) {
+        return;
+      }
+
       this.recognition.continuous = this.continuous;
       this.recognition.interimResults = false;
 
@@ -50,7 +54,9 @@
 
     /* -- Private Methods ------------------------------------------- */
     _accentChanged: function() {
-      this.recognition.lang = this.accent;
+      if (this.recognition) {
+        this.recognition.lang = this.accent;
+      }
     },
 
     _propagateEvent: function(eventName) {
