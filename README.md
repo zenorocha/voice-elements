@@ -1,3 +1,7 @@
+[![Published on Vaadin  Directory](https://img.shields.io/badge/Vaadin%20Directory-published-00b4f0.svg)](https://vaadin.com/directory/component/zenorochavoice-elements)
+[![Stars on vaadin.com/directory](https://img.shields.io/vaadin-directory/star/binhbbui411shields-badge.svg)](https://vaadin.com/directory/component/zenorochavoice-elements)
+
+
 # &lt;voice-elements&gt;
 
 > Web Component wrapper to the [Web Speech API](https://dvcs.w3.org/hg/speech-api/raw-file/tip/speechapi.html), that allows you to do voice recognition (speech to text) and speech synthesis (text to speech) using [Polymer](http://www.polymer-project.org/).
